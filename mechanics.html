@@ -6,21 +6,22 @@
   <title>Lamp Learner — Mechanics</title>  
   <link rel="stylesheet" href="css/styles.css">  
 </head>  
-<body>  
-  <main class="app">  
+<body class="module-page-body">  
+  <main class="mechanics-app">  
     <header class="glass-header">  
       <div class="brand">  
         <span class="logo">◐</span>  
         <div>  
           <h1>Lamp Learner</h1>  
-          <p>Interactive clinical skills training</p>  
+          <p>Module 1 — Mechanics</p>  
         </div>  
       </div>
 
-      <div class="module-selector">  
-        <a class="mod-tab active" href="mechanics.html">Mechanics</a>  
-        <a class="mod-tab" href="anterior.html">Anterior</a>  
-        <a class="mod-tab" href="posterior.html">Posterior</a>  
+      <div class="header-actions">  
+        <a href="index.html" class="header-link">Home</a>  
+        <button id="toggleGuide" class="guide-toggle" type="button" aria-expanded="false" aria-controls="guidePanel">  
+          Show Guide  
+        </button>  
       </div>  
     </header>
 
@@ -34,99 +35,103 @@
       </div>  
     </div>
 
-    <div class="progress glass-strip">  
-      <div>  
-        <small>Lesson progress</small>  
-        <strong id="progressLabel"></strong>  
-      </div>  
-      <div class="track"><i id="progressBar"></i></div>  
-      <b id="progressPercent"></b>  
-    </div>
-
-    <div class="workspace">  
-      <nav class="glass-panel">  
+    <div class="mechanics-layout">  
+      <aside id="guidePanel" class="guide-drawer glass-panel" hidden>  
         <div class="navTitle">  
           <small>INSTRUMENT GUIDE</small>  
-          <h2>Learn the parts</h2>  
-          <p>Select a component to explore.</p>  
+          <h2>All components</h2>  
+          <p>Select any part directly.</p>  
         </div>  
         <ol id="partsList"></ol>  
-      </nav>
+      </aside>
 
-      <section class="stage">  
+      <section class="diagram-stage">  
         <div class="stageCard glass-panel">  
           <div class="stageTitle">  
             <small>INTERACTIVE DIAGRAM</small>  
             <h2>Explore the slit lamp</h2>  
-            <p>Choose a numbered marker to learn its purpose and use.</p>  
+            <p>Use the arrows below or click directly on the image.</p>  
           </div>
 
-          <div class="imageWrap">  
-            <img src="images/slitlamp.png" alt="Haag-Streit slit lamp">  
-            <div id="hotspots"></div>  
+          <div class="diagram-grid">  
+            <div class="image-column">  
+              <div class="imageWrap imageWrap-mechanics">  
+                <img src="images/slitlamp.png" alt="Haag-Streit slit lamp">  
+                <div id="hotspots"></div>  
+              </div>  
+            </div>
+
+            <div class="info-column">  
+              <aside id="teachingPanel" class="floating-info glass">  
+                <small id="partNumber"></small>  
+                <h2 id="partName"></h2>  
+                <div class="rule"></div>
+
+                <article>  
+                  <i>◎</i>  
+                  <div>  
+                    <h3>Function</h3>  
+                    <p id="functionText"></p>  
+                  </div>  
+                </article>
+
+                <article>  
+                  <i>↗</i>  
+                  <div>  
+                    <h3>How to Use</h3>  
+                    <p id="useText"></p>  
+                  </div>  
+                </article>
+
+                <article class="pearl">  
+                  <i>✦</i>  
+                  <div>  
+                    <h3>Clinical Pearl</h3>  
+                    <p id="pearlText"></p>  
+                  </div>  
+                </article>
+
+                <article class="mistake">  
+                  <i>!</i>  
+                  <div>  
+                    <h3>Common Beginner Mistake</h3>  
+                    <p id="mistakeText"></p>  
+                  </div>  
+                </article>  
+              </aside>  
+            </div>  
           </div>
 
-          <p class="hint">Select a component from the guide, or explore the image directly.</p>  
+          <div class="bottom-nav glass">  
+            <button id="previous" class="bottom-arrow">  
+              <span>←</span>  
+              <div>  
+                <small>Previous</small>  
+                <strong id="previousName"></strong>  
+              </div>  
+            </button>
+
+            <div class="bottom-center">  
+              <span id="lessonCount"></span>  
+              <div id="dots"></div>  
+              <div class="lesson-progress-inline">  
+                <small id="progressLabel"></small>  
+                <div class="track"><i id="progressBar"></i></div>  
+                <b id="progressPercent"></b>  
+              </div>  
+            </div>
+
+            <button class="bottom-arrow next" id="next">  
+              <div>  
+                <small>Next</small>  
+                <strong id="nextName"></strong>  
+              </div>  
+              <span>→</span>  
+            </button>  
+          </div>  
         </div>  
-      </section>
-
-      <aside id="teachingPanel" class="glass-panel">  
-        <small id="partNumber"></small>  
-        <h2 id="partName"></h2>  
-        <div class="rule"></div>
-
-        <article>  
-          <i>◎</i>  
-          <div>  
-            <h3>Function</h3>  
-            <p id="functionText"></p>  
-          </div>  
-        </article>
-
-        <article>  
-          <i>↗</i>  
-          <div>  
-            <h3>How to Use</h3>  
-            <p id="useText"></p>  
-          </div>  
-        </article>
-
-        <article class="pearl">  
-          <i>✦</i>  
-          <div>  
-            <h3>Clinical Pearl</h3>  
-            <p id="pearlText"></p>  
-          </div>  
-        </article>
-
-        <article class="mistake">  
-          <i>!</i>  
-          <div>  
-            <h3>Common Beginner Mistake</h3>  
-            <p id="mistakeText"></p>  
-          </div>  
-        </article>  
-      </aside>  
-    </div>
-
-    <footer class="glass-footer">  
-      <button id="previous">  
-        <span>←</span>  
-        <small>Previous</small>  
-        <strong id="previousName"></strong>  
-      </button>
-
-      <div>  
-        <span id="lessonCount"></span>  
-        <div id="dots"></div>  
-      </div>
-
-      <button class="next" id="next">  
-        <small>Next</small>  
-        <strong id="nextName"></strong>  
-        <span>→</span>  
-      </button>  
-    </footer>  
+      </section>  
+    </div>  
   </main>
 
   <div class="quizOverlay" id="quizOverlay" hidden>  
@@ -158,8 +163,8 @@
       <p class="quizResult" id="quizResult" aria-live="polite"></p>
 
       <div id="moduleCompleteActions" class="module-complete-actions" hidden>  
-        <h3>Module complete ✨</h3>  
-        <p>You can continue to the next sections.</p>  
+        <h3>Mechanics complete</h3>  
+        <p>Next modules are now available.</p>  
         <div class="module-links">  
           <a href="anterior.html" class="cute-btn primary-btn">Go to Anterior</a>  
           <a href="posterior.html" class="cute-btn secondary-btn">Go to Posterior</a>  
