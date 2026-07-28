@@ -22,7 +22,7 @@
             <small class="eyebrow">HOME PROGRESS</small>  
             <h2>Course Progress</h2>  
           </div>  
-          <button id="resetProgressBtn" class="utility-btn" type="button">Reset Progress</button>  
+          <button id="resetProgressBtn" class="header-btn" type="button">Reset Progress</button>  
         </div>
 
         <div class="progress-panel">  
@@ -51,13 +51,7 @@
             </div>  
           </a>
 
-          <div  
-            id="anteriorCard"  
-            class="module-progress-card locked"  
-            tabindex="0"  
-            role="button"  
-            aria-disabled="true"  
-          >  
+          <div id="anteriorCard" class="module-progress-card locked" tabindex="0" role="button" aria-disabled="true">  
             <div class="module-card-top">  
               <small>MODULE 2</small>  
               <span class="status-pill locked-pill">Locked</span>  
@@ -73,13 +67,7 @@
             <span class="locked-tooltip">Complete Mechanics to unlock Anterior.</span>  
           </div>
 
-          <div  
-            id="posteriorCard"  
-            class="module-progress-card locked"  
-            tabindex="0"  
-            role="button"  
-            aria-disabled="true"  
-          >  
+          <div id="posteriorCard" class="module-progress-card locked" tabindex="0" role="button" aria-disabled="true">  
             <div class="module-card-top">  
               <small>MODULE 3</small>  
               <span class="status-pill locked-pill">Locked</span>  
@@ -112,14 +100,12 @@
         dashboardScreen.classList.add("fade-in");  
         renderDashboardProgress();  
       }, 700);  
-    }, 1500);
+    }, 1400);
 
-    document.addEventListener("click", (e) => {  
-      if (e.target && e.target.id === "resetProgressBtn") {  
-        if (confirm("Reset all stored progress for this browser?")) {  
-          resetCourseProgress();  
-          window.location.reload();  
-        }  
+    document.getElementById("resetProgressBtn").addEventListener("click", () => {  
+      if (confirm("Reset all stored progress for this browser?")) {  
+        resetCourseProgress();  
+        location.reload();  
       }  
     });  
   </script>  
