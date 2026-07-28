@@ -14,3 +14,41 @@ footer{min-height:84px;padding:11px 30px;display:grid;grid-template-columns:1fr 
 @media(max-width:760px){header{height:auto;min-height:74px;padding:13px 18px}.module{display:none}.progress{padding:0 18px;grid-template-columns:1fr 36px}.progress>div:first-child{display:none}.workspace{display:block}nav{max-height:220px;border-right:0;border-bottom:1px solid var(--line)}.navTitle{padding:18px}ol{display:flex;gap:6px;padding:8px 14px 14px;overflow-x:auto}li{flex:0 0 auto}nav button{width:52px;display:block;text-align:center}nav button em,nav button i{display:none}nav button>span{margin:auto}.stage{padding:21px 8px 10px}.imageWrap{width:100%;height:auto;min-height:0;aspect-ratio:1536/1800}.hotspot{width:32px;height:32px}aside{padding:24px 20px}footer{grid-template-columns:1fr 1fr;padding:10px 14px}footer>div{display:none}}
 .quizOverlay{position:fixed;inset:0;z-index:20;background:#10233d99;display:grid;place-items:center;padding:24px;backdrop-filter:blur(8px)}.quizOverlay[hidden]{display:none}.quizCard{position:relative;width:min(100%,760px);max-height:94vh;overflow:auto;background:#fff;border-radius:24px;padding:30px 34px;box-shadow:0 30px 80px #07142559}.quizCard>small{color:var(--blue);font-weight:800;letter-spacing:.12em}.quizCard h2{margin:7px 0;color:var(--navy);font-size:28px}.quizCard>p{color:var(--muted);margin:5px 0 16px}.quizClose{position:absolute;right:18px;top:14px;border:0;background:transparent;color:#69798b;font-size:28px;cursor:pointer}.quizStatus{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}.quizStatus strong{color:var(--blue)}#quizPrompt{margin:10px 0 6px;color:var(--navy);font-size:20px}.quizImageWrap{position:relative;width:min(100%,560px);height:min(55vh,510px);min-height:390px;margin:8px auto 0}.quizImageWrap img{width:100%;height:100%;object-fit:contain;display:block}.quizHotspot{position:absolute;width:54px;height:54px;transform:translate(-50%,-50%);border:0;border-radius:50%;background:transparent;cursor:crosshair}.quizHotspot:hover,.quizHotspot:focus-visible{outline:2px solid #246fd475;background:#246fd412}.quizHotspot.correct,.quizHotspot.reveal{outline:3px solid #2f9a61;background:#42b8782e}.quizHotspot.incorrect{outline:3px solid #d75e5e;background:#df70702b}.quizActions{display:flex;gap:10px;margin-top:14px}.quizActions button{border:0;border-radius:11px;background:var(--blue);color:#fff;padding:12px 18px;font-weight:750;cursor:pointer}.quizActions button+button{background:#eef4fb;color:var(--blue)}.quizResult{min-height:22px;margin:10px 0 0!important;font-weight:750;color:var(--navy)!important}.quizResult.correctText{color:#257a4d!important}.quizResult.incorrectText{color:#b84b4b!important}.quizResult.finalResult{font-size:18px;padding:18px 0}.quizOpen{overflow:hidden}
 @media(max-width:600px){.quizOverlay{padding:8px}.quizCard{padding:24px 16px}.quizImageWrap{height:auto;min-height:0;aspect-ratio:1536/1800}.quizHotspot{width:36px;height:36px}}
+/* (All your existing CSS code stays above this...) */
+
+.quizResult.correctText{color:#257a4d!important}
+.quizResult.incorrectText{color:#b84b4b!important}
+.quizResult.finalResult{font-size:18px;padding:18px 0}
+.quizOpen{overflow:hidden}
+@media(max-width:600px){.quizOverlay{padding:8px}.quizCard{padding:24px 16px}.quizImageWrap{height:auto;min-height:0;aspect-ratio:1536/1800}.quizHotspot{width:36px;height:36px}}
+
+/* 👇 PASTE STEP 3 AT THE VERY BOTTOM OF STYLES.CSS */
+.module-selector {
+  display: flex;
+  gap: 8px;
+  background: var(--bg);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.mod-tab {
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.mod-tab:hover {
+  color: var(--blue);
+  background: #fff;
+}
+
+.mod-tab.active {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 4px 12px #246fd438;
+}
