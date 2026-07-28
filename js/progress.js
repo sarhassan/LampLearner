@@ -79,23 +79,17 @@ function lockCard(card) {
   card.classList.add("locked");  
   card.classList.remove("unlocked");  
   card.setAttribute("aria-disabled", "true");  
-  card.setAttribute("tabindex", "-1");  
-  card.href = "#";  
-  card.addEventListener("click", stopLockedCard);  
 }
 
 function unlockCard(card, href) {  
-  if (!card) return;  
-  card.classList.remove("locked");  
-  card.classList.add("unlocked");  
-  card.removeAttribute("aria-disabled");  
-  card.removeAttribute("tabindex");  
-  card.href = href;  
-  card.removeEventListener("click", stopLockedCard);  
-}
+  if (!card) return;
 
-function stopLockedCard(e) {  
-  e.preventDefault();  
+  const replacement = document.createElement("a");  
+  replacement.id = card.id;  
+  replacement.className = "module-progress-card unlocked";  
+  replacement.href = href;  
+  replacement.innerHTML = card.innerHTML;  
+  card.replaceWith(replacement);  
 }
 
 function renderDashboardProgress() {  
@@ -123,13 +117,13 @@ function renderDashboardProgress() {
   const anteriorCard = document.getElementById("anteriorCard");  
   const posteriorCard = document.getElementById("posteriorCard");
 
-  if (isAnteriorUnlocked()) {  
+  if (isAnteriorUnlocked() && anteriorCard && anteriorCard.tagName !== "A") {  
     unlockCard(anteriorCard, "anterior.html");  
   } else {  
     lockCard(anteriorCard);  
   }
 
-  if (isPosteriorUnlocked()) {  
+  if (isPosteriorUnlocked() && posteriorCard && posteriorCard.tagName !== "A") {  
     unlockCard(posteriorCard, "posterior.html");  
   } else {  
     lockCard(posteriorCard);  
