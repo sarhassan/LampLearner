@@ -16,6 +16,14 @@ function saveCourseProgress(progress) {
   localStorage.setItem(COURSE_PROGRESS_KEY, JSON.stringify(progress));  
 }
 
+function updateCourseProgress() {  
+  const progress = getCourseProgress();  
+  const modules = [progress.mechanics, progress.anterior, progress.posterior];  
+  const completeCount = modules.filter(Boolean).length;  
+  progress.percent = Math.round((completeCount / modules.length) * 100);  
+  saveCourseProgress(progress);  
+}
+
 function markCourseStepComplete(step) {  
   const progress = getCourseProgress();  
   progress[step] = true;  
@@ -23,28 +31,15 @@ function markCourseStepComplete(step) {
   updateCourseProgress();  
 }
 
-function updateCourseProgress() {  
-  const progress = getCourseProgress();  
-  const steps = [  
-    progress.mechanics,  
-    progress.anterior,  
-    progress.posterior  
-  ];
-
-  const done = steps.filter(Boolean).length;  
-  progress.percent = Math.round((done / steps.length) * 100);  
-  saveCourseProgress(progress);  
-}
-
 function renderCourseProgress() {  
   updateCourseProgress();  
   const progress = getCourseProgress();
 
-  const text = document.getElementById("overallProgressText");  
-  const fill = document.getElementById("overallProgressFill");
+  const fill = document.getElementById("overallProgressFill");  
+  const text = document.getElementById("overallProgressText");
 
-  if (text) text.textContent = `${progress.percent}%`;  
-  if (fill) fill.style.width = `${progress.percent}%`;  
+  if (fill) fill.style.width = progress.percent + "%";  
+  if (text) text.textContent = progress.percent + "%";  
 }
 
 function resetCourseProgress() {  
