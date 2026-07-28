@@ -82,7 +82,7 @@ function lockCard(card) {
 }
 
 function unlockCard(card, href) {  
-  if (!card) return;
+  if (!card || card.tagName === "A") return;
 
   const replacement = document.createElement("a");  
   replacement.id = card.id;  
@@ -117,17 +117,11 @@ function renderDashboardProgress() {
   const anteriorCard = document.getElementById("anteriorCard");  
   const posteriorCard = document.getElementById("posteriorCard");
 
-  if (isAnteriorUnlocked() && anteriorCard && anteriorCard.tagName !== "A") {  
-    unlockCard(anteriorCard, "anterior.html");  
-  } else {  
-    lockCard(anteriorCard);  
-  }
+  if (isAnteriorUnlocked()) unlockCard(anteriorCard, "anterior.html");  
+  else lockCard(anteriorCard);
 
-  if (isPosteriorUnlocked() && posteriorCard && posteriorCard.tagName !== "A") {  
-    unlockCard(posteriorCard, "posterior.html");  
-  } else {  
-    lockCard(posteriorCard);  
-  }  
+  if (isPosteriorUnlocked()) unlockCard(posteriorCard, "posterior.html");  
+  else lockCard(posteriorCard);  
 }
 
 function resetCourseProgress() {  
