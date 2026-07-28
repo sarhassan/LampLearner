@@ -1,26 +1,23 @@
 # Lamp Learner
 
-Interactive slit lamp training website with:  
-- animated landing page  
-- mechanics module with clickable hotspots  
-- built-in quiz  
-- anterior and posterior placeholders  
-- overall course progress
+Interactive slit lamp training website.
 
-## Structure
-
-- `index.html` — landing page  
-- `mechanics.html` — interactive mechanics module  
+## Pages  
+- `index.html` — welcome screen + progress dashboard  
+- `mechanics.html` — interactive mechanics module with hotspots and quiz  
 - `anterior.html` — placeholder module  
-- `posterior.html` — placeholder module  
-- `css/styles.css` — full site styling  
-- `js/lessons.js` — slit lamp content  
-- `js/hotspots.js` — hotspot coordinates  
-- `js/app.js` — mechanics interactivity + quiz  
-- `js/progress.js` — overall course progress via localStorage
+- `posterior.html` — placeholder module
 
-## Notes
+## JavaScript  
+- `js/lessons.js` — slit lamp lesson content  
+- `js/hotspots.js` — hotspot locations  
+- `js/app.js` — mechanics interactions and quiz  
+- `js/progress.js` — overall and per-module progress using localStorage
 
-Make sure the slit lamp image is present at:
+## Notes  
+For now, module locking works per browser using localStorage.  
+No user accounts are required yet.
+
+Make sure the slit lamp image is at:
 
 `images/slitlamp.png`  
