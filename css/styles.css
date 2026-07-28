@@ -1004,7 +1004,9 @@ a {
 }
 
 @keyframes fadeAway {  
-  to { opacity: 0; }  
+  to {  
+    opacity: 0;  
+  }  
 }
 
 @keyframes fadeIn {  
