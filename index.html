@@ -17,8 +17,13 @@
 
     <section class="dashboard-screen hidden" id="dashboardScreen">  
       <div class="dashboard-card glass">  
-        <small class="eyebrow">HOME PROGRESS</small>  
-        <h2>Course Progress</h2>
+        <div class="dashboard-topbar">  
+          <div>  
+            <small class="eyebrow">HOME PROGRESS</small>  
+            <h2>Course Progress</h2>  
+          </div>  
+          <button id="resetProgressBtn" class="utility-btn" type="button">Reset Progress</button>  
+        </div>
 
         <div class="progress-panel">  
           <div class="progress-row">  
@@ -52,7 +57,6 @@
             tabindex="0"  
             role="button"  
             aria-disabled="true"  
-            data-locked-message="Complete Mechanics to unlock Anterior."  
           >  
             <div class="module-card-top">  
               <small>MODULE 2</small>  
@@ -75,7 +79,6 @@
             tabindex="0"  
             role="button"  
             aria-disabled="true"  
-            data-locked-message="Complete Mechanics to unlock Posterior."  
           >  
             <div class="module-card-top">  
               <small>MODULE 3</small>  
@@ -108,8 +111,17 @@
         dashboardScreen.classList.remove("hidden");  
         dashboardScreen.classList.add("fade-in");  
         renderDashboardProgress();  
-      }, 900);  
-    }, 1800);  
+      }, 700);  
+    }, 1500);
+
+    document.addEventListener("click", (e) => {  
+      if (e.target && e.target.id === "resetProgressBtn") {  
+        if (confirm("Reset all stored progress for this browser?")) {  
+          resetCourseProgress();  
+          window.location.reload();  
+        }  
+      }  
+    });  
   </script>  
 </body>  
 </html>  
