@@ -57,10 +57,10 @@ const quizQuestions=[
  {q:"Click the Handle Bar.",a:10}
 ];
 let quizIndex=0,quizScore=0,quizAnswered=false;
-function renderQuiz(){
- quizIndex=0;quizScore=0;$("quizForm").hidden=false;renderQuizQuestion();
- $("quizRetry").hidden=true;
-}
+function renderQuiz(){  
+  quizIndex=0;quizScore=0;$("quizForm").hidden=false;renderQuizQuestion();  
+  $("quizRetry").hidden=true;  
+}  
 function renderQuizQuestion(){
  quizAnswered=false;
  $("quizQuestionCount").textContent=`Question ${quizIndex+1} of ${quizQuestions.length}`;
