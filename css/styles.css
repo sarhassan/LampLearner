@@ -1,310 +1,61 @@
+/* ===== FULL MECHANICS REWRITE ===== */
+
 :root {  
-  --primary: #4b2e83;  
-  --primary-dark: #3e266e;  
-  --primary-light: #6a50a3;  
+  --primary: #4a2383;  
+  --primary-dark: #381a66;  
+  --primary-light: #6b56a3;  
   --primary-pale: #ede8f6;  
-  --white: #ffffff;  
-  --white-soft: rgba(255, 255, 255, 0.92);  
-  --white-glass: rgba(255, 255, 255, 0.82);  
-  --ink: #2d3146;  
-  --muted: #6e7389;  
-  --line: rgba(75, 46, 131, 0.12);  
-  --shadow: 0 18px 40px rgba(50, 40, 90, 0.12);  
-  --shadow-soft: 0 8px 20px rgba(50, 40, 90, 0.08);  
-  --success: #487763;  
-  --danger: #a85f63;  
-  --page: #f5f4f8;  
-  --panel: #ffffff;  
-  --panel-muted: #f0eef5;  
+  --page-bg: #f3f2f6;  
+  --panel-bg: #ffffff;  
+  --panel-soft: #f6f4fa;  
+  --ink: #30344a;  
+  --muted: #70758c;  
+  --line: rgba(74, 35, 131, 0.1);  
+  --shadow: 0 10px 30px rgba(50, 40, 90, 0.08);  
 }
 
-* {  
-  box-sizing: border-box;  
-}
-
-body {  
-  margin: 0;  
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;  
-  color: var(--ink);  
-  background: var(--page);  
+/* page */  
+.mechanics-page {  
+  background: var(--page-bg);  
   min-height: 100vh;  
-}
-
-button,  
-input {  
-  font: inherit;  
-}
-
-a {  
-  color: inherit;  
-}
-
-.hidden {  
-  display: none !important;  
-}
-
-.glass {  
-  background: var(--white-glass);  
-  backdrop-filter: blur(14px);  
-  -webkit-backdrop-filter: blur(14px);  
-  border: 1px solid rgba(255, 255, 255, 0.9);  
-  box-shadow: var(--shadow);  
-}
-
-.eyebrow {  
-  color: var(--primary);  
-  font-size: 11px;  
-  font-weight: 800;  
-  letter-spacing: 0.15em;  
-}
-
-/* home */  
-.landing-body {  
   overflow: hidden;  
 }
 
-.landing-shell {  
-  min-height: 100vh;  
+.mechanics-shell {  
+  width: min(98vw, 1380px);  
+  height: calc(100vh - 18px);  
+  margin: 9px auto;  
   display: grid;  
-  place-items: center;  
-  padding: 24px;  
-}
-
-.welcome-screen,  
-.dashboard-screen {  
-  width: min(980px, 100%);  
-}
-
-.welcome-card,  
-.dashboard-card {  
-  border-radius: 28px;  
-}
-
-.welcome-card {  
-  padding: 52px 40px;  
-  text-align: center;  
-}
-
-.welcome-card h1 {  
-  margin: 0 0 10px;  
-  color: var(--primary);  
-  font-size: clamp(42px, 7vw, 72px);  
-  letter-spacing: -0.05em;  
-}
-
-.welcome-card p {  
-  margin: 0;  
-  color: var(--muted);  
-  font-size: 17px;  
-}
-
-.dashboard-card {  
-  padding: 32px;  
-}
-
-.dashboard-topbar {  
-  display: flex;  
-  justify-content: space-between;  
-  align-items: start;  
-  gap: 16px;  
-  margin-bottom: 10px;  
-}
-
-.dashboard-card h2 {  
-  margin: 8px 0 0;  
-  color: var(--ink);  
-  font-size: clamp(28px, 4vw, 44px);  
-  letter-spacing: -0.04em;  
-}
-
-.utility-btn,  
-.topbar-link,  
-.topbar-button {  
-  min-height: 42px;  
-  padding: 0 14px;  
-  border-radius: 999px;  
-  border: 1px solid rgba(75, 46, 131, 0.12);  
-  background: var(--white);  
-  box-shadow: var(--shadow-soft);  
-  text-decoration: none;  
-  display: inline-flex;  
-  align-items: center;  
-  justify-content: center;  
-  cursor: pointer;  
-  font-weight: 700;  
-  color: var(--primary);  
-}
-
-.progress-panel {  
-  margin-bottom: 24px;  
-}
-
-.progress-row {  
-  display: flex;  
-  justify-content: space-between;  
-  margin-bottom: 8px;  
-  color: var(--muted);  
-  font-size: 12px;  
-  font-weight: 700;  
-}
-
-.overall-track {  
-  height: 10px;  
-  border-radius: 999px;  
-  background: rgba(75, 46, 131, 0.10);  
-  overflow: hidden;  
-}
-
-.overall-track i {  
-  display: block;  
-  width: 0%;  
-  height: 100%;  
-  border-radius: inherit;  
-  background: var(--primary);  
-  transition: width 0.25s ease;  
-}
-
-.module-progress-grid {  
-  display: grid;  
-  grid-template-columns: repeat(3, 1fr);  
-  gap: 18px;  
-}
-
-.module-progress-card {  
-  position: relative;  
-  text-decoration: none;  
-  padding: 20px;  
-  border-radius: 20px;  
-  background: var(--panel);  
-  border: 1px solid rgba(75, 46, 131, 0.08);  
-  box-shadow: var(--shadow-soft);  
-  transition: transform 0.18s ease;  
-}
-
-.module-progress-card.unlocked:hover {  
-  transform: translateY(-2px);  
-}
-
-.module-progress-card.locked {  
-  filter: grayscale(1);  
-  opacity: 0.36;  
-  pointer-events: auto;  
-  user-select: none;  
-  background: #dddbe3;  
-  border-color: rgba(90, 90, 100, 0.18);  
-  cursor: not-allowed;  
-}
-
-.module-progress-card.locked:hover .locked-tooltip,  
-.module-progress-card.locked:focus .locked-tooltip,  
-.module-progress-card.locked:focus-visible .locked-tooltip {  
-  opacity: 1;  
-  transform: translateY(0);  
-}
-
-.locked-tooltip {  
-  position: absolute;  
-  left: 20px;  
-  right: 20px;  
-  bottom: 14px;  
-  padding: 10px 12px;  
-  border-radius: 12px;  
-  background: var(--primary-dark);  
-  color: #fff;  
-  font-size: 12px;  
-  line-height: 1.4;  
-  opacity: 0;  
-  transform: translateY(6px);  
-  transition: 0.18s ease;  
-  pointer-events: none;  
-}
-
-.module-card-top {  
-  display: flex;  
-  justify-content: space-between;  
-  align-items: center;  
+  grid-template-rows: auto auto 1fr auto;  
   gap: 10px;  
 }
 
-.module-progress-card small {  
-  color: var(--muted);  
-  font-size: 10px;  
-  font-weight: 800;  
-  letter-spacing: 0.12em;  
+/* generic glass feel, cleaner and less glowy */  
+.mechanics-page .glass {  
+  background: rgba(255, 255, 255, 0.88);  
+  border: 1px solid rgba(255, 255, 255, 0.95);  
+  box-shadow: var(--shadow);  
+  backdrop-filter: blur(10px);  
+  -webkit-backdrop-filter: blur(10px);  
 }
 
-.module-progress-card h3 {  
-  margin: 10px 0 8px;  
-  color: var(--ink);  
-  font-size: 22px;  
-}
-
-.module-progress-card p {  
-  margin: 0 0 16px;  
-  color: var(--muted);  
-  font-size: 14px;  
-  line-height: 1.6;  
-}
-
-.status-pill {  
-  min-height: 28px;  
-  padding: 0 10px;  
-  border-radius: 999px;  
-  display: inline-flex;  
-  align-items: center;  
-  font-size: 11px;  
-  font-weight: 800;  
-  background: var(--primary-pale);  
-  color: var(--primary);  
-}
-
-.locked-pill {  
-  background: #d9d7df;  
-  color: #6d6f7a;  
-}
-
-.mini-progress {  
-  display: grid;  
-  gap: 8px;  
-}
-
-.mini-progress strong {  
-  color: var(--primary);  
-  font-size: 12px;  
-}
-
-/* mechanics */  
-.mechanics-body {  
-  overflow: hidden;  
-}
-
-.mechanics-fullscreen {  
-  position: relative;  
-  min-height: 100vh;  
-  padding: 16px;  
-}
-
-.mechanics-topbar {  
-  position: absolute;  
-  top: 16px;  
-  left: 16px;  
-  right: 16px;  
-  z-index: 30;  
-  min-height: 76px;  
-  border-radius: 22px;  
-  padding: 14px 20px;  
+/* header */  
+.mechanics-header {  
   display: flex;  
   justify-content: space-between;  
   align-items: center;  
+  gap: 14px;  
+  padding: 14px 18px;  
+  border-radius: 24px;  
 }
 
-.brand {  
+.mechanics-header .brand {  
   display: flex;  
   align-items: center;  
-  gap: 13px;  
+  gap: 14px;  
 }
 
-.logo {  
+.mechanics-header .logo {  
   width: 46px;  
   height: 46px;  
   border-radius: 14px;  
@@ -313,239 +64,130 @@ a {
   background: var(--primary);  
   color: #fff;  
   font-size: 24px;  
-  box-shadow: var(--shadow-soft);  
 }
 
-h1 {  
+.mechanics-header h1 {  
   margin: 0;  
   color: var(--ink);  
-  font-size: 22px;  
+  font-size: 20px;  
   letter-spacing: -0.03em;  
 }
 
-.brand p {  
-  margin: 3px 0 0;  
+.mechanics-header p {  
+  margin: 2px 0 0;  
   color: var(--muted);  
   font-size: 12px;  
 }
 
-.topbar-actions {  
+.header-actions {  
   display: flex;  
-  gap: 10px;  
   align-items: center;  
+  gap: 10px;  
   flex-wrap: wrap;  
 }
 
-.parts-dropdown-wrap {  
-  position: relative;  
-}
-
-.parts-dropdown {  
-  position: absolute;  
-  top: calc(100% + 10px);  
-  right: 0;  
-  width: 340px;  
-  max-height: 76vh;  
-  overflow: auto;  
-  border-radius: 20px;  
-  padding: 10px;  
-  z-index: 40;  
-}
-
-.parts-dropdown-header {  
-  display: flex;  
-  justify-content: space-between;  
-  align-items: center;  
-  padding: 8px 10px 12px;  
-  color: var(--ink);  
-}
-
-.dropdown-close,  
-.panel-close {  
-  width: 34px;  
-  height: 34px;  
-  border: 0;  
-  border-radius: 50%;  
-  background: var(--panel-muted);  
+.header-btn {  
+  min-height: 40px;  
+  padding: 0 16px;  
+  border-radius: 999px;  
+  border: 1px solid var(--line);  
+  background: #fff;  
   color: var(--primary);  
-  cursor: pointer;  
-}
-
-.parts-dropdown-tools {  
-  display: grid;  
-  gap: 10px;  
-  padding: 0 10px 12px;  
-}
-
-.parts-search {  
-  width: 100%;  
-  min-height: 42px;  
-  border-radius: 12px;  
-  border: 1px solid rgba(75, 46, 131, 0.12);  
-  padding: 0 12px;  
-  background: var(--white);  
-  color: var(--ink);  
-  outline: none;  
-}
-
-.parts-search:focus {  
-  border-color: var(--primary);  
-}
-
-.filter-toggle {  
+  font-weight: 700;  
+  text-decoration: none;  
   display: inline-flex;  
   align-items: center;  
-  gap: 8px;  
-  color: var(--muted);  
-  font-size: 12px;  
-  font-weight: 600;  
+  justify-content: center;  
+  cursor: pointer;  
+  box-shadow: 0 4px 12px rgba(50, 40, 90, 0.05);  
 }
 
-.parts-empty {  
-  margin: 10px;  
-  color: var(--muted);  
-  font-size: 13px;  
-}
-
+/* progress */  
 .mechanics-progress {  
-  position: absolute;  
-  top: 104px;  
-  left: 16px;  
-  right: 16px;  
-  z-index: 25;  
   border-radius: 18px;  
-  padding: 12px 20px;  
+  padding: 12px 18px;  
 }
 
-.overall-progress-inner {  
+.mechanics-progress .overall-progress-inner {  
   display: grid;  
-  grid-template-columns: 190px 1fr 55px;  
+  grid-template-columns: 160px 1fr 52px;  
   gap: 16px;  
   align-items: center;  
 }
 
-.overall-progress-inner small,  
-.overall-progress-inner strong {  
-  font-size: 12px;  
-}
-
-.overall-progress-inner small {  
+.mechanics-progress small {  
   color: var(--muted);  
+  font-size: 12px;  
+  font-weight: 700;  
 }
 
-.overall-progress-inner strong {  
+.mechanics-progress strong {  
   color: var(--primary);  
   text-align: right;  
-}
-
-.navTitle {  
-  padding: 10px 10px 6px;  
-}
-
-.navTitle small,  
-.floating-hotspot-card > .panel-scroll > small {  
-  color: var(--primary);  
-  font-size: 10px;  
-  font-weight: 800;  
-  letter-spacing: 0.13em;  
-}
-
-.navTitle h2 {  
-  margin: 7px 0 4px;  
-  color: var(--ink);  
-  font-size: 18px;  
-}
-
-.navTitle p {  
-  margin: 0;  
-  color: var(--muted);  
   font-size: 12px;  
 }
 
-ol {  
-  margin: 0;  
-  padding: 0;  
-  list-style: none;  
+.overall-track {  
+  height: 8px;  
+  border-radius: 999px;  
+  background: rgba(74, 35, 131, 0.08);  
+  overflow: hidden;  
 }
 
-li {  
-  margin: 4px 0;  
-}
-
-#partsList button {  
-  width: 100%;  
-  min-height: 46px;  
-  border: 0;  
-  border-radius: 14px;  
-  padding: 8px 10px;  
-  display: grid;  
-  grid-template-columns: 28px 1fr 12px;  
-  gap: 10px;  
-  align-items: center;  
-  text-align: left;  
-  color: #58607e;  
-  background: transparent;  
-  cursor: pointer;  
-}
-
-#partsList button:hover {  
-  background: var(--panel-muted);  
-}
-
-#partsList button > span {  
-  width: 26px;  
-  height: 26px;  
-  border-radius: 9px;  
-  display: grid;  
-  place-items: center;  
-  background: var(--primary-pale);  
-  font-size: 11px;  
-  font-weight: 800;  
-}
-
-#partsList button em {  
-  font-style: normal;  
-  font-size: 11.5px;  
-  font-weight: 650;  
-  line-height: 1.25;  
-}
-
-#partsList button i {  
-  font-style: normal;  
-  color: #98a0bc;  
-  font-size: 20px;  
-}
-
-#partsList button.active {  
-  color: var(--primary);  
-  background: var(--primary-pale);  
-  box-shadow: inset 3px 0 0 var(--primary);  
-}
-
-#partsList button.active > span {  
-  background: var(--primary);  
-  color: #fff;  
-}
-
-.mechanics-stage {  
-  position: absolute;  
-  inset: 0;  
-  padding: 132px 12px 96px;  
-}
-
-.imageWrap-full {  
-  position: relative;  
-  width: 100%;  
+.overall-track i {  
+  display: block;  
+  width: 0%;  
   height: 100%;  
+  background: var(--primary);  
+  border-radius: inherit;  
 }
 
-.imageWrap-full img {  
+/* stage */  
+.mechanics-stage {  
+  min-height: 0;  
+  border-radius: 28px;  
+  padding: 18px;  
+  overflow: hidden;  
+}
+
+.stage-grid {  
+  display: grid;  
+  grid-template-columns: 290px minmax(0, 1fr) 290px;  
+  gap: 16px;  
+  align-items: stretch;  
+  height: 100%;  
+  min-height: 0;  
+}
+
+.side-dock {  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  min-height: 0;  
+}
+
+.image-stage {  
+  min-width: 0;  
+  min-height: 0;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+}
+
+.bounded-image-wrap {  
+  position: relative;  
+  width: min(100%, 820px);  
+  height: 100%;  
+  min-height: 520px;  
+  max-height: 100%;  
+  margin: 0 auto;  
+}
+
+.bounded-image-wrap img {  
   width: 100%;  
   height: 100%;  
   object-fit: contain;  
   display: block;  
-  transform: scale(1.04);  
-  transform-origin: center center;  
 }
 
 #hotspots {  
@@ -553,6 +195,7 @@ li {
   inset: 0;  
 }
 
+/* hotspots */  
 .hotspot {  
   position: absolute;  
   width: 52px;  
@@ -570,133 +213,300 @@ li {
   position: absolute;  
   inset: 10px;  
   border-radius: 50%;  
-  background: rgba(75, 46, 131, 0.18);  
-  box-shadow: 0 0 0 8px rgba(75, 46, 131, 0.08);  
-  transition: 0.18s ease;  
+  background: rgba(74, 35, 131, 0.14);  
+  box-shadow: 0 0 0 8px rgba(74, 35, 131, 0.07);  
+  transition: 0.2s ease;  
 }
 
 .hotspot:hover::before,  
 .hotspot:focus-visible::before {  
-  background: rgba(75, 46, 131, 0.26);  
+  background: rgba(74, 35, 131, 0.22);  
+  box-shadow: 0 0 0 10px rgba(74, 35, 131, 0.1);  
 }
 
 .hotspot.active::before {  
-  background: rgba(75, 46, 131, 0.34);  
-  box-shadow: 0 0 0 10px rgba(75, 46, 131, 0.10);  
+  background: rgba(74, 35, 131, 0.28);  
+  box-shadow: 0 0 0 10px rgba(74, 35, 131, 0.13);  
+  animation: hotspotPulse 1.4s ease-in-out infinite;  
 }
 
-.floating-hotspot-card {  
-  position: absolute;  
-  width: min(280px, 28vw);  
-  min-width: 250px;  
-  max-width: 300px;  
-  max-height: 58vh;  
+@keyframes hotspotPulse {  
+  0% { box-shadow: 0 0 0 8px rgba(74, 35, 131, 0.10); }  
+  50% { box-shadow: 0 0 0 12px rgba(74, 35, 131, 0.16); }  
+  100% { box-shadow: 0 0 0 8px rgba(74, 35, 131, 0.10); }  
+}
+
+/* component panel */  
+.component-panel {  
+  position: relative;  
+  width: 100%;  
+  max-width: 290px;  
+  max-height: 520px;  
   border-radius: 22px;  
-  z-index: 10;  
-  transition:  
-    left 0.25s ease,  
-    top 0.25s ease;  
   overflow: hidden;  
+  background: rgba(255, 255, 255, 0.95);  
 }
 
 .panel-close {  
   position: absolute;  
   top: 10px;  
   right: 10px;  
+  width: 32px;  
+  height: 32px;  
+  border: 0;  
+  border-radius: 50%;  
+  background: var(--primary-pale);  
+  color: var(--primary);  
+  cursor: pointer;  
   z-index: 2;  
 }
 
 .panel-scroll {  
-  max-height: 58vh;  
+  max-height: 520px;  
   overflow: auto;  
-  padding: 18px 18px 18px;  
+  padding: 18px;  
 }
 
-.floating-hotspot-card h2 {  
-  margin: 8px 0 14px;  
+.component-panel small {  
+  color: var(--primary);  
+  font-size: 10px;  
+  font-weight: 800;  
+  letter-spacing: 0.14em;  
+}
+
+.component-panel h2 {  
+  margin: 8px 0 12px;  
   color: var(--ink);  
-  font-size: 21px;  
-  line-height: 1.18;  
-  letter-spacing: -0.02em;  
+  font-size: 18px;  
+  line-height: 1.2;  
 }
 
-.rule {  
-  width: 42px;  
+.component-panel .rule {  
+  width: 36px;  
   height: 3px;  
   border-radius: 999px;  
   background: var(--primary);  
-  margin-bottom: 14px;  
+  margin-bottom: 12px;  
 }
 
-article {  
+.component-panel article {  
   display: grid;  
-  grid-template-columns: 28px 1fr;  
-  gap: 10px;  
-  padding: 13px 0;  
-  border-top: 1px solid rgba(75, 46, 131, 0.08);  
+  grid-template-columns: 24px 1fr;  
+  gap: 8px;  
+  padding: 10px 0;  
+  border-top: 1px solid rgba(74, 35, 131, 0.08);  
 }
 
-article > i {  
-  width: 28px;  
-  height: 28px;  
+.component-panel article > i {  
+  width: 24px;  
+  height: 24px;  
   border-radius: 8px;  
   display: grid;  
   place-items: center;  
-  color: var(--primary);  
   background: var(--primary-pale);  
+  color: var(--primary);  
   font-style: normal;  
   font-weight: 800;  
+  font-size: 11px;  
 }
 
-article h3 {  
-  margin: 1px 0 5px;  
+.component-panel article h3 {  
+  margin: 0 0 4px;  
+  font-size: 11px;  
   color: var(--ink);  
-  font-size: 12px;  
 }
 
-article p {  
+.component-panel article p {  
   margin: 0;  
-  color: #5d657f;  
-  font-size: 11.5px;  
-  line-height: 1.5;  
+  font-size: 10.5px;  
+  line-height: 1.45;  
+  color: var(--muted);  
 }
 
-.pearl,  
-.mistake {  
-  margin-top: 8px;  
-  padding: 12px;  
-  border-radius: 14px;  
+.component-panel .pearl,  
+.component-panel .mistake {  
+  margin-top: 6px;  
+  padding: 10px;  
+  border-radius: 12px;  
   border: 0;  
 }
 
-.pearl {  
-  background: #f3f0f9;  
+.component-panel .pearl {  
+  background: var(--panel-soft);  
 }
 
-.mistake {  
-  background: #f2f2f4;  
+.component-panel .mistake {  
+  background: #f3f3f5;  
 }
 
-.mechanics-footer {  
+/* guide */  
+.guide-wrap {  
+  position: relative;  
+}
+
+.guide-dropdown {  
   position: absolute;  
-  left: 16px;  
-  right: 16px;  
-  bottom: 16px;  
-  z-index: 20;  
-  border-radius: 22px;  
-  padding: 14px;  
+  top: calc(100% + 10px);  
+  right: 0;  
+  width: 330px;  
+  max-height: 72vh;  
+  overflow: auto;  
+  border-radius: 20px;  
+  padding: 10px;  
+  z-index: 40;  
+}
+
+.guide-dropdown-header {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  padding: 8px 10px 12px;  
+}
+
+.dropdown-close {  
+  width: 32px;  
+  height: 32px;  
+  border: 0;  
+  border-radius: 50%;  
+  background: var(--primary-pale);  
+  color: var(--primary);  
+  cursor: pointer;  
+}
+
+.guide-tools {  
+  display: grid;  
+  gap: 10px;  
+  padding: 0 10px 12px;  
+}
+
+.guide-search {  
+  width: 100%;  
+  min-height: 40px;  
+  border-radius: 12px;  
+  border: 1px solid var(--line);  
+  padding: 0 12px;  
+  background: #fff;  
+  color: var(--ink);  
+}
+
+.guide-filter {  
+  display: inline-flex;  
+  align-items: center;  
+  gap: 8px;  
+  color: var(--muted);  
+  font-size: 12px;  
+  font-weight: 600;  
+}
+
+.guide-empty {  
+  margin: 10px;  
+  color: var(--muted);  
+  font-size: 13px;  
+}
+
+#partsList {  
+  list-style: none;  
+  margin: 0;  
+  padding: 0;  
+}
+
+#partsList li {  
+  margin: 4px 0;  
+}
+
+#partsList button {  
+  width: 100%;  
+  min-height: 42px;  
+  border: 0;  
+  border-radius: 14px;  
+  padding: 8px 10px;  
+  display: grid;  
+  grid-template-columns: 26px 1fr 12px;  
+  gap: 10px;  
+  align-items: center;  
+  text-align: left;  
+  background: transparent;  
+  color: var(--muted);  
+  cursor: pointer;  
+}
+
+#partsList button:hover {  
+  background: var(--panel-soft);  
+}
+
+#partsList button > span {  
+  width: 24px;  
+  height: 24px;  
+  border-radius: 8px;  
+  display: grid;  
+  place-items: center;  
+  background: var(--primary-pale);  
+  font-size: 10px;  
+  font-weight: 800;  
+  color: var(--primary);  
+}
+
+#partsList button em {  
+  font-style: normal;  
+  font-size: 11px;  
+  font-weight: 650;  
+  color: var(--ink);  
+}
+
+#partsList button i {  
+  font-style: normal;  
+  color: #a0a3b1;  
+  font-size: 18px;  
+}
+
+#partsList button.active {  
+  background: var(--primary-pale);  
+  box-shadow: inset 3px 0 0 var(--primary);  
+}
+
+#partsList button.active > span {  
+  background: var(--primary);  
+  color: #fff;  
+}
+
+/* bottom tray */  
+.mechanics-tray {  
+  position: relative;  
+  border-radius: 26px;  
+  padding: 10px 14px 14px;  
+  overflow: hidden;  
+  transform: translateY(calc(100% - 58px));  
+  opacity: 0.92;  
+  transition: transform 0.24s ease, opacity 0.24s ease;  
+}
+
+.mechanics-tray:hover,  
+.mechanics-tray:focus-within,  
+.mechanics-shell:hover .mechanics-tray {  
+  transform: translateY(0);  
+  opacity: 1;  
+}
+
+.tray-handle {  
+  width: 64px;  
+  height: 6px;  
+  border-radius: 999px;  
+  background: rgba(74, 35, 131, 0.18);  
+  margin: 0 auto 10px;  
+}
+
+.tray-content {  
   display: grid;  
   grid-template-columns: 1fr minmax(280px, 520px) 1fr;  
   gap: 16px;  
   align-items: center;  
 }
 
-.bottom-arrow {  
-  min-height: 58px;  
-  border: 0;  
-  border-radius: 16px;  
-  background: var(--white);  
-  box-shadow: var(--shadow-soft);  
+.tray-arrow {  
+  min-height: 52px;  
+  border: 1px solid var(--line);  
+  border-radius: 18px;  
+  background: #fff;  
   color: var(--ink);  
   display: grid;  
   grid-template-columns: 34px 1fr;  
@@ -707,38 +517,39 @@ article p {
   cursor: pointer;  
 }
 
-.bottom-arrow span {  
+.tray-arrow span {  
   color: var(--primary);  
   font-size: 20px;  
 }
 
-.bottom-arrow small {  
+.tray-arrow small {  
   color: var(--muted);  
   font-size: 10px;  
 }
 
-.bottom-arrow strong {  
+.tray-arrow strong {  
   display: block;  
-  font-size: 11px;  
+  font-size: 10px;  
 }
 
-.bottom-arrow.next {  
+.tray-arrow.next {  
   grid-template-columns: 1fr 34px;  
   text-align: right;  
   background: var(--primary);  
-  color: white;  
+  color: #fff;  
+  border-color: transparent;  
 }
 
-.bottom-arrow.next span {  
-  color: white;  
+.tray-arrow.next span {  
+  color: #fff;  
 }
 
-.bottom-arrow:disabled {  
+.tray-arrow:disabled {  
   opacity: 0.45;  
   cursor: default;  
 }
 
-.bottom-center {  
+.tray-center {  
   text-align: center;  
 }
 
@@ -752,26 +563,23 @@ article p {
   display: grid;  
   grid-template-columns: repeat(14, minmax(0, 1fr));  
   gap: 6px;  
-  margin: 10px 0 12px;  
+  margin: 8px 0 10px;  
 }
 
 .dot-button {  
-  min-height: 30px;  
-  border-radius: 10px;  
-  font-size: 11px;  
-  font-weight: 800;  
-  transition: 0.18s ease;  
-  border: 1px solid rgba(75, 46, 131, 0.12);  
-}
-
-.dot-button.unseen {  
-  background: var(--white);  
+  min-height: 26px;  
+  border-radius: 8px;  
+  border: 1px solid var(--line);  
+  background: #fff;  
   color: var(--muted);  
+  font-size: 10px;  
+  font-weight: 800;  
+  cursor: pointer;  
 }
 
 .dot-button.unseen:hover {  
-  color: var(--primary);  
   border-color: var(--primary);  
+  color: var(--primary);  
 }
 
 .dot-button.done {  
@@ -780,27 +588,33 @@ article p {
 }
 
 .dot-button.active {  
-  border: 1px solid var(--primary);  
   background: var(--primary);  
-  color: white;  
+  color: #fff;  
+  border-color: var(--primary);  
 }
 
 .lesson-progress-inline {  
-  width: 100%;  
-  margin: 0 auto;  
   display: grid;  
-  gap: 6px;  
+  gap: 5px;  
+}
+
+.lesson-progress-inline small,  
+.lesson-progress-inline b {  
+  font-size: 10px;  
 }
 
 .lesson-progress-inline small {  
   color: var(--muted);  
-  font-size: 11px;  
+}
+
+.lesson-progress-inline b {  
+  color: var(--primary);  
 }
 
 .track {  
   height: 8px;  
   border-radius: 999px;  
-  background: rgba(75, 46, 131, 0.10);  
+  background: rgba(74, 35, 131, 0.08);  
   overflow: hidden;  
 }
 
@@ -812,253 +626,53 @@ article p {
   border-radius: inherit;  
 }
 
-.lesson-progress-inline b {  
-  color: var(--primary);  
-  font-size: 11px;  
-}
+/* responsive */  
+@media (max-width: 1100px) {  
+  .stage-grid {  
+    grid-template-columns: 240px minmax(0, 1fr) 240px;  
+  }
 
-/* quiz */  
-.quizOverlay {  
-  position: fixed;  
-  inset: 0;  
-  z-index: 50;  
-  background: rgba(45, 49, 70, 0.24);  
-  display: grid;  
-  place-items: center;  
-  padding: 24px;  
-  backdrop-filter: blur(8px);  
-}
-
-.quizOverlay[hidden] {  
-  display: none;  
-}
-
-.quizCard {  
-  position: relative;  
-  width: min(100%, 760px);  
-  max-height: 94vh;  
-  overflow: auto;  
-  padding: 30px 34px;  
-  border-radius: 26px;  
-}
-
-.quizCard > small {  
-  color: var(--primary);  
-  font-weight: 800;  
-  letter-spacing: 0.12em;  
-  font-size: 10px;  
-}
-
-.quizCard h2 {  
-  margin: 8px 0;  
-  color: var(--ink);  
-  font-size: 30px;  
-  letter-spacing: -0.03em;  
-}
-
-.quizCard > p {  
-  color: var(--muted);  
-  margin: 5px 0 16px;  
-}
-
-.quizClose {  
-  position: absolute;  
-  right: 16px;  
-  top: 14px;  
-  border: 0;  
-  background: transparent;  
-  color: var(--muted);  
-  font-size: 28px;  
-  cursor: pointer;  
-}
-
-.quizStatus {  
-  display: flex;  
-  justify-content: space-between;  
-  color: var(--muted);  
-  font-size: 12px;  
-}
-
-.quizStatus strong {  
-  color: var(--primary);  
-}
-
-#quizPrompt {  
-  margin: 10px 0 6px;  
-  color: var(--ink);  
-  font-size: 20px;  
-}
-
-.quizImageWrap {  
-  position: relative;  
-  width: min(100%, 560px);  
-  height: min(55vh, 510px);  
-  min-height: 390px;  
-  margin: 8px auto 0;  
-}
-
-.quizImageWrap img {  
-  width: 100%;  
-  height: 100%;  
-  object-fit: contain;  
-  display: block;  
-}
-
-.quizHotspot {  
-  position: absolute;  
-  width: 54px;  
-  height: 54px;  
-  transform: translate(-50%, -50%);  
-  border: 0;  
-  border-radius: 50%;  
-  background: transparent;  
-  cursor: crosshair;  
-}
-
-.quizHotspot::before {  
-  content: "";  
-  position: absolute;  
-  inset: 10px;  
-  border-radius: 50%;  
-  background: rgba(75, 46, 131, 0.14);  
-}
-
-.quizHotspot.correct::before,  
-.quizHotspot.reveal::before {  
-  background: rgba(72, 119, 99, 0.22);  
-}
-
-.quizHotspot.incorrect::before {  
-  background: rgba(168, 95, 99, 0.20);  
-}
-
-.quizActions {  
-  display: flex;  
-  gap: 10px;  
-  margin-top: 14px;  
-}
-
-.quizActions button {  
-  border: 1px solid rgba(75, 46, 131, 0.12);  
-  border-radius: 999px;  
-  padding: 12px 18px;  
-  font-weight: 800;  
-  cursor: pointer;  
-  background: var(--white);  
-  color: var(--primary);  
-}
-
-.quizResult {  
-  min-height: 22px;  
-  margin: 10px 0 0 !important;  
-  font-weight: 800;  
-  color: var(--ink) !important;  
-}
-
-.quizResult.correctText {  
-  color: var(--success) !important;  
-}
-
-.quizResult.incorrectText {  
-  color: var(--danger) !important;  
-}
-
-.quizResult.finalResult {  
-  font-size: 18px;  
-  padding: 18px 0;  
-}
-
-.module-complete-actions {  
-  margin-top: 18px;  
-}
-
-.module-links {  
-  display: flex;  
-  gap: 12px;  
-  flex-wrap: wrap;  
-}
-
-.fade-away {  
-  animation: fadeAway 0.7s forwards;  
-}
-
-.fade-in {  
-  animation: fadeIn 0.7s forwards;  
-}
-
-@keyframes fadeAway {  
-  to {  
-    opacity: 0;  
-  }  
-}
-
-@keyframes fadeIn {  
-  from {  
-    opacity: 0;  
-    transform: translateY(14px);  
-  }  
-  to {  
-    opacity: 1;  
-    transform: translateY(0);  
+  .component-panel {  
+    max-width: 240px;  
   }  
 }
 
 @media (max-width: 980px) {  
-  .module-progress-grid {  
-    grid-template-columns: 1fr;  
-  }
-
-  .overall-progress-inner {  
-    grid-template-columns: 1fr;  
-    gap: 8px;  
-  }
-
-  .overall-progress-inner strong {  
-    text-align: left;  
-  }
-
-  .mechanics-body {  
+  .mechanics-page {  
     overflow: auto;  
   }
 
-  .mechanics-fullscreen {  
-    padding-bottom: 24px;  
+  .mechanics-shell {  
+    height: auto;  
+    min-height: 100vh;  
+    grid-template-rows: auto auto auto auto;  
   }
 
   .mechanics-stage {  
-    position: relative;  
-    inset: auto;  
-    padding: 150px 0 24px;  
-    min-height: auto;  
+    padding: 14px;  
   }
 
-  .imageWrap-full {  
-    min-height: auto;  
-    display: flex;  
-    flex-direction: column;  
-    gap: 18px;  
-  }
-
-  .imageWrap-full img {  
+  .stage-grid {  
+    grid-template-columns: 1fr;  
     height: auto;  
-    max-height: 70vh;  
-    transform: scale(1.01);  
   }
 
-  #hotspots {  
-    position: absolute;  
-    inset: 0 auto auto 0;  
-    width: 100%;  
-    height: min(70vh, 900px);  
+  .side-dock {  
+    display: block;  
   }
 
-  .floating-hotspot-card {  
-    position: relative;  
-    left: auto !important;  
-    top: auto !important;  
-    width: 100%;  
-    min-width: 0;  
+  .image-stage {  
+    order: 1;  
+  }
+
+  #leftDock,  
+  #rightDock {  
+    order: 2;  
+  }
+
+  .component-panel {  
     max-width: none;  
+    width: 100%;  
     max-height: none;  
   }
 
@@ -1066,365 +680,64 @@ article p {
     max-height: none;  
   }
 
-  .mechanics-footer {  
-    position: relative;  
-    left: auto;  
-    right: auto;  
-    bottom: auto;  
-    margin-top: 12px;  
+  .bounded-image-wrap {  
+    min-height: 0;  
+    height: auto;  
+    aspect-ratio: 1536 / 1800;  
+    width: min(100%, 760px);  
+  }
+
+  .mechanics-tray {  
+    transform: none;  
+    opacity: 1;  
+  }
+
+  .tray-content {  
     grid-template-columns: 1fr;  
   }
 
   .clickable-dots {  
     grid-template-columns: repeat(7, minmax(0, 1fr));  
+  }
+
+  .mechanics-progress .overall-progress-inner {  
+    grid-template-columns: 1fr;  
+    gap: 8px;  
+  }
+
+  .mechanics-progress strong {  
+    text-align: left;  
   }  
 }
 
 @media (max-width: 720px) {  
-  .welcome-card,  
-  .dashboard-card,  
-  .quizCard {  
-    padding: 24px;  
+  .mechanics-shell {  
+    width: min(100vw, 100%);  
+    margin: 0;  
+    padding: 10px;  
+    gap: 10px;  
+    height: auto;  
   }
 
-  .dashboard-topbar {  
+  .mechanics-header {  
     flex-direction: column;  
     align-items: stretch;  
   }
 
-  .mechanics-topbar {  
-    position: relative;  
-    top: auto;  
-    left: auto;  
-    right: auto;  
-    flex-direction: column;  
-    align-items: stretch;  
-    gap: 12px;  
-  }
-
-  .mechanics-progress {  
-    position: relative;  
-    top: auto;  
-    left: auto;  
-    right: auto;  
-    margin-top: 12px;  
-  }
-
-  .topbar-actions {  
+  .header-actions {  
     justify-content: flex-start;  
   }
 
-  .parts-dropdown {  
-    width: min(340px, calc(100vw - 48px));  
-    right: 0;  
-  }
-
-  .mechanics-stage {  
-    padding-top: 18px;  
+  .guide-dropdown {  
+    width: min(330px, calc(100vw - 40px));  
   }
 
   .clickable-dots {  
     grid-template-columns: repeat(5, minmax(0, 1fr));  
-  }
-
-  .quizImageWrap {  
-    height: auto;  
-    min-height: 0;  
-    aspect-ratio: 1536 / 1800;  
-  }
-
-  .quizHotspot {  
-    width: 36px;  
-    height: 36px;  
   }
 
   .hotspot {  
     width: 40px;  
     height: 40px;  
-  }  
-}  
-
-/* ===== Mechanics no-overlap patch ===== */
-
-:root {  
-  --primary: #4a2383;  
-  --primary-dark: #381a66;  
-  --primary-light: #6a4a9a;  
-  --primary-pale: #ece6f5;  
-}
-
-/* stage becomes a 3-column dock layout */  
-.mechanics-clean .mechanics-stage {  
-  position: absolute;  
-  inset: 0;  
-  padding: 118px 10px 72px;  
-}
-
-.mechanics-clean .imageWrap-full {  
-  display: grid;  
-  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) minmax(240px, 300px);  
-  align-items: stretch;  
-  width: 100%;  
-  height: 100%;  
-  gap: 10px;  
-}
-
-/* image always lives in the middle column */  
-.mechanics-clean .imageWrap-full > img,  
-.mechanics-clean .imageWrap-full > #hotspots {  
-  grid-column: 2;  
-}
-
-.mechanics-clean .imageWrap-full > img {  
-  width: 100%;  
-  height: 100%;  
-  object-fit: contain;  
-  transform: scale(1.08);  
-}
-
-/* info card docks left or right, never over image */  
-.mechanics-clean .floating-hotspot-card {  
-  position: relative;  
-  grid-row: 1;  
-  align-self: center;  
-  justify-self: stretch;  
-  width: 100%;  
-  min-width: 0;  
-  max-width: 300px;  
-  max-height: 52vh;  
-  border-radius: 18px;  
-  background: rgba(255, 255, 255, 0.94);  
-  border: 1px solid rgba(74, 35, 131, 0.08);  
-  overflow: hidden;  
-  left: auto !important;  
-  top: auto !important;  
-  transition: opacity 0.2s ease, transform 0.2s ease;  
-}
-
-.mechanics-clean .floating-hotspot-card.dock-left {  
-  grid-column: 1;  
-  justify-self: end;  
-}
-
-.mechanics-clean .floating-hotspot-card.dock-right {  
-  grid-column: 3;  
-  justify-self: start;  
-}
-
-.mechanics-clean .floating-hotspot-card::after {  
-  display: none !important;  
-}
-
-.mechanics-clean .panel-scroll {  
-  max-height: 52vh;  
-  overflow: auto;  
-  padding: 14px;  
-}
-
-.mechanics-clean .panel-close {  
-  position: absolute;  
-  top: 8px;  
-  right: 8px;  
-  z-index: 3;  
-}
-
-/* compact card so it doesn't dominate */  
-.mechanics-clean .floating-hotspot-card h2 {  
-  margin: 6px 0 10px;  
-  font-size: 18px;  
-  line-height: 1.2;  
-}
-
-.mechanics-clean .floating-hotspot-card .rule {  
-  width: 30px;  
-  height: 3px;  
-  margin-bottom: 10px;  
-  background: var(--primary);  
-}
-
-.mechanics-clean .floating-hotspot-card article {  
-  grid-template-columns: 22px 1fr;  
-  gap: 8px;  
-  padding: 10px 0;  
-}
-
-.mechanics-clean .floating-hotspot-card article > i {  
-  width: 22px;  
-  height: 22px;  
-  border-radius: 7px;  
-  font-size: 11px;  
-}
-
-.mechanics-clean .floating-hotspot-card article h3 {  
-  margin: 0 0 4px;  
-  font-size: 11px;  
-}
-
-.mechanics-clean .floating-hotspot-card article p {  
-  font-size: 10.5px;  
-  line-height: 1.45;  
-}
-
-.mechanics-clean .floating-hotspot-card .pearl,  
-.mechanics-clean .floating-hotspot-card .mistake {  
-  padding: 9px;  
-  border-radius: 10px;  
-  margin-top: 6px;  
-}
-
-/* smaller top UI */  
-.mechanics-clean .mechanics-topbar {  
-  min-height: 60px;  
-  padding: 8px 14px;  
-}
-
-.mechanics-clean .mechanics-progress {  
-  top: 84px;  
-  padding: 10px 14px;  
-}
-
-.mechanics-clean .brand p {  
-  font-size: 11px;  
-}
-
-.mechanics-clean .logo {  
-  width: 40px;  
-  height: 40px;  
-  font-size: 21px;  
-}
-
-/* bottom tray should stay out of the way until hover/focus */  
-.mechanics-clean .mechanics-footer {  
-  left: 10px;  
-  right: 10px;  
-  bottom: 8px;  
-  padding: 10px 12px;  
-  border-radius: 20px;  
-  grid-template-columns: 1fr minmax(260px, 470px) 1fr;  
-  transform: translateY(calc(100% - 54px));  
-  opacity: 0.58;  
-  transition: transform 0.24s ease, opacity 0.24s ease;  
-}
-
-.mechanics-clean .mechanics-footer:hover,  
-.mechanics-clean .mechanics-footer:focus-within,  
-.mechanics-clean .mechanics-fullscreen:hover .mechanics-footer {  
-  transform: translateY(0);  
-  opacity: 1;  
-}
-
-.mechanics-clean .bottom-arrow {  
-  min-height: 46px;  
-  padding: 8px 12px;  
-}
-
-.mechanics-clean .bottom-arrow strong {  
-  font-size: 10px;  
-}
-
-.mechanics-clean #lessonCount {  
-  font-size: 10px;  
-}
-
-.mechanics-clean .clickable-dots {  
-  gap: 5px;  
-  margin: 8px 0 10px;  
-}
-
-.mechanics-clean .dot-button {  
-  min-height: 24px;  
-  font-size: 10px;  
-  border-radius: 8px;  
-}
-
-/* active hotspot pulse */  
-.mechanics-clean .hotspot.active::before {  
-  animation: activePulse 1.4s ease-in-out infinite;  
-}
-
-@keyframes activePulse {  
-  0% { box-shadow: 0 0 0 8px rgba(74, 35, 131, 0.10); }  
-  50% { box-shadow: 0 0 0 12px rgba(74, 35, 131, 0.16); }  
-  100% { box-shadow: 0 0 0 8px rgba(74, 35, 131, 0.10); }  
-}
-
-/* on smaller screens, stack naturally */  
-@media (max-width: 980px) {  
-  .mechanics-clean .mechanics-body,  
-  .mechanics-clean {  
-    overflow: auto;  
-  }
-
-  .mechanics-clean .mechanics-topbar,  
-  .mechanics-clean .mechanics-progress,  
-  .mechanics-clean .mechanics-stage,  
-  .mechanics-clean .mechanics-footer {  
-    position: relative;  
-    top: auto;  
-    left: auto;  
-    right: auto;  
-    bottom: auto;  
-    transform: none;  
-    opacity: 1;  
-  }
-
-  .mechanics-clean .mechanics-stage {  
-    padding: 12px 0;  
-  }
-
-  .mechanics-clean .imageWrap-full {  
-    display: flex;  
-    flex-direction: column;  
-    gap: 14px;  
-  }
-
-  .mechanics-clean .imageWrap-full > img,  
-  .mechanics-clean .imageWrap-full > #hotspots,  
-  .mechanics-clean .floating-hotspot-card {  
-    grid-column: auto;  
-  }
-
-  .mechanics-clean .imageWrap-full > img {  
-    height: auto;  
-    max-height: 68vh;  
-    transform: scale(1.02);  
-  }
-
-  .mechanics-clean #hotspots {  
-    position: absolute;  
-    inset: 0 auto auto 0;  
-    width: 100%;  
-    height: min(68vh, 820px);  
-  }
-
-  .mechanics-clean .floating-hotspot-card {  
-    position: relative;  
-    width: 100%;  
-    max-width: none;  
-    max-height: none;  
-  }
-
-  .mechanics-clean .panel-scroll {  
-    max-height: none;  
-  }
-
-  .mechanics-clean .mechanics-footer {  
-    margin-top: 10px;  
-    grid-template-columns: 1fr;  
-  }
-
-  .mechanics-clean .clickable-dots {  
-    grid-template-columns: repeat(7, minmax(0, 1fr));  
-  }  
-}
-
-@media (max-width: 720px) {  
-  .mechanics-clean .clickable-dots {  
-    grid-template-columns: repeat(5, minmax(0, 1fr));  
-  }
-
-  .mechanics-clean .hotspot {  
-    width: 38px;  
-    height: 38px;  
   }  
 }  
