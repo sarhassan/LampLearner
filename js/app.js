@@ -24,7 +24,6 @@
 
   parts.forEach((part, i) => {  
     const li = document.createElement("li");  
-    li.dataset.index = i;  
     li.dataset.name = `${part.id} ${part.name}`.toLowerCase();
 
     const b = document.createElement("button");  
@@ -41,8 +40,8 @@
 
     const h = document.createElement("button");  
     h.className = "hotspot";  
-    h.style.left = pos[i].x + "%";  
-    h.style.top = pos[i].y + "%";  
+    h.style.left = `${pos[i].x}%`;  
+    h.style.top = `${pos[i].y}%`;  
     h.setAttribute("aria-label", `${part.id}. ${part.name}`);  
     h.title = `${part.id}. ${part.name}`;  
     h.onclick = () => {  
@@ -54,8 +53,8 @@
     const dot = document.createElement("button");  
     dot.type = "button";  
     dot.className = "dot-button";  
-    dot.setAttribute("aria-label", `Go to part ${part.id}: ${part.name}`);  
     dot.title = `${part.id}. ${part.name}`;  
+    dot.setAttribute("aria-label", `Go to part ${part.id}: ${part.name}`);  
     dot.onclick = () => {  
       panelDismissed = false;  
       select(i, true);  
@@ -115,19 +114,13 @@
   function dockTeachingPanel(i) {  
     if (window.innerWidth <= 980 || panelDismissed) return;
 
-    const spot = pos[i];
-
     leftDock.innerHTML = "";  
     rightDock.innerHTML = "";
 
-    if (spot.x < 50) {  
+    if (pos[i].x < 50) {  
       rightDock.appendChild(teachingPanel);  
-      teachingPanel.classList.remove("dock-left");  
-      teachingPanel.classList.add("dock-right");  
     } else {  
       leftDock.appendChild(teachingPanel);  
-      teachingPanel.classList.remove("dock-right");  
-      teachingPanel.classList.add("dock-left");  
     }  
   }
 
@@ -148,11 +141,11 @@
     });
 
     $("partNumber").textContent = `COMPONENT ${String(p.id).padStart(2, "0")}`;  
-    $("partName").textContent = p.name;
-
-    ["function", "use", "pearl", "mistake"].forEach((k) => {  
-      $(k + "Text").textContent = p[k];  
-    });
+    $("partName").textContent = p.name;  
+    $("functionText").textContent = p.function;  
+    $("useText").textContent = p.use;  
+    $("pearlText").textContent = p.pearl;  
+    $("mistakeText").textContent = p.mistake;
 
     $("lessonCount").textContent = `Part ${selected + 1} of ${parts.length}`;  
     $("previousName").textContent = selected ? parts[selected - 1].name : "Start";  
@@ -165,10 +158,7 @@
 
     $("previous").disabled = selected === 0;  
     $("next").disabled = selected === parts.length - 1 && viewed.size < parts.length;  
-    $("next").classList.toggle(  
-      "quizReady",  
-      selected === parts.length - 1 && viewed.size === parts.length  
-    );
+    $("next").classList.toggle("quizReady", selected === parts.length - 1 && viewed.size === parts.length);
 
     updateProgress();
 
@@ -177,12 +167,6 @@
       dockTeachingPanel(selected);  
     }  
   }
-
-  window.addEventListener("resize", () => {  
-    if (!panelDismissed) {  
-      dockTeachingPanel(selected);  
-    }  
-  });
 
   $("previous").onclick = () => {  
     panelDismissed = false;  
@@ -198,8 +182,15 @@
     select(selected + 1);  
   };
 
+  window.addEventListener("resize", () => {  
+    if (!panelDismissed) dockTeachingPanel(selected);  
+  });
+
   document.addEventListener("keydown", (e) => {  
-    if (!$("quizOverlay").hidden) return;
+    if (!$("quizOverlay").hidden) {  
+      if (e.key === "Escape") closeQuiz();  
+      return;  
+    }
 
     if (e.key === "ArrowLeft") {  
       panelDismissed = false;  
@@ -209,6 +200,10 @@
     if (e.key === "ArrowRight") {  
       panelDismissed = false;  
       select(selected + 1);  
+    }
+
+    if (e.key === "Escape") {  
+      closePartsDropdown();  
     }  
   });
 
@@ -218,58 +213,42 @@
 
   function openPartsDropdown() {  
     partsDropdown.hidden = false;  
-    togglePartsDropdown?.setAttribute("aria-expanded", "true");  
+    togglePartsDropdown.setAttribute("aria-expanded", "true");  
     applyPartFilters();  
   }
 
   function closePartsDropdown() {  
     partsDropdown.hidden = true;  
-    togglePartsDropdown?.setAttribute("aria-expanded", "false");  
+    togglePartsDropdown.setAttribute("aria-expanded", "false");  
   }
 
-  if (togglePartsDropdown) {  
-    togglePartsDropdown.addEventListener("click", () => {  
-      if (partsDropdown.hidden) openPartsDropdown();  
-      else closePartsDropdown();  
-    });  
-  }
-
-  if (closePartsDropdownBtn) {  
-    closePartsDropdownBtn.addEventListener("click", closePartsDropdown);  
-  }
-
-  if (partsSearch) {  
-    partsSearch.addEventListener("input", applyPartFilters);  
-  }
-
-  if (showUnviewedOnly) {  
-    showUnviewedOnly.addEventListener("change", applyPartFilters);  
-  }
-
-  document.addEventListener("click", (e) => {  
-    if (!partsDropdown || partsDropdown.hidden) return;  
-    const clickedInside =  
-      partsDropdown.contains(e.target) || togglePartsDropdown.contains(e.target);  
-    if (!clickedInside) closePartsDropdown();  
+  togglePartsDropdown.addEventListener("click", () => {  
+    if (partsDropdown.hidden) openPartsDropdown();  
+    else closePartsDropdown();  
   });
 
-  const closeTeachingPanelBtn = $("closeTeachingPanel");  
-  if (closeTeachingPanelBtn) {  
-    closeTeachingPanelBtn.addEventListener("click", () => {  
-      panelDismissed = true;  
-      hideTeachingPanel();  
-    });  
-  }
+  closePartsDropdownBtn.addEventListener("click", closePartsDropdown);
 
-  const resetBtn = $("resetMechanicsProgressBtn");  
-  if (resetBtn) {  
-    resetBtn.addEventListener("click", () => {  
-      if (confirm("Reset all stored progress for this browser?")) {  
-        resetCourseProgress();  
-        window.location.href = "index.html";  
-      }  
-    });  
-  }
+  if (partsSearch) partsSearch.addEventListener("input", applyPartFilters);  
+  if (showUnviewedOnly) showUnviewedOnly.addEventListener("change", applyPartFilters);
+
+  document.addEventListener("click", (e) => {  
+    if (partsDropdown.hidden) return;  
+    const inside = partsDropdown.contains(e.target) || togglePartsDropdown.contains(e.target);  
+    if (!inside) closePartsDropdown();  
+  });
+
+  $("closeTeachingPanel").addEventListener("click", () => {  
+    panelDismissed = true;  
+    hideTeachingPanel();  
+  });
+
+  $("resetMechanicsProgressBtn").addEventListener("click", () => {  
+    if (confirm("Reset all stored progress for this browser?")) {  
+      resetCourseProgress();  
+      window.location.href = "index.html";  
+    }  
+  });
 
   const quizQuestions = [  
     { q: "Click the Magnification Changer (Drum).", a: 1 },  
@@ -286,13 +265,11 @@
   function renderQuiz() {  
     quizIndex = 0;  
     quizScore = 0;  
+    quizAnswered = false;  
     $("quizForm").hidden = false;  
+    $("quizRetry").hidden = true;  
+    if ($("moduleCompleteActions")) $("moduleCompleteActions").hidden = true;  
     renderQuizQuestion();  
-    $("quizRetry").hidden = true;
-
-    if ($("moduleCompleteActions")) {  
-      $("moduleCompleteActions").hidden = true;  
-    }  
   }
 
   function renderQuizQuestion() {  
@@ -332,12 +309,9 @@
     }
 
     $("quizScore").textContent = `Score: ${quizScore}`;  
-    $("quizResult").textContent = correct  
-      ? "Correct."  
-      : "Not quite. The correct location is highlighted.";  
+    $("quizResult").textContent = correct ? "Correct." : "Not quite. The correct location is highlighted.";  
     $("quizResult").className = `quizResult ${correct ? "correctText" : "incorrectText"}`;  
-    $("quizNext").textContent =  
-      quizIndex === quizQuestions.length - 1 ? "See results" : "Next question";  
+    $("quizNext").textContent = quizIndex === quizQuestions.length - 1 ? "See results" : "Next question";  
     $("quizNext").hidden = false;  
   }
 
@@ -374,17 +348,9 @@
         ? `Excellent — ${quizScore} of ${quizQuestions.length} correct.`  
         : `You identified ${quizScore} of ${quizQuestions.length} correctly.`;
 
-    if (window.markCourseStepComplete) {  
-      window.markCourseStepComplete("mechanics");  
-    }
-
-    if (window.renderCourseProgress) {  
-      window.renderCourseProgress();  
-    }
-
-    if ($("moduleCompleteActions")) {  
-      $("moduleCompleteActions").hidden = false;  
-    }  
+    if (window.markCourseStepComplete) window.markCourseStepComplete("mechanics");  
+    if (window.renderCourseProgress) window.renderCourseProgress();  
+    if ($("moduleCompleteActions")) $("moduleCompleteActions").hidden = false;  
   };
 
   $("quizRetry").onclick = () => {  
@@ -392,14 +358,6 @@
     renderQuiz();  
   };
 
-  document.addEventListener("keydown", (e) => {  
-    if (e.key === "Escape" && !$("quizOverlay").hidden) closeQuiz();  
-    if (e.key === "Escape" && partsDropdown && !partsDropdown.hidden) closePartsDropdown();  
-  });
-
-  if (window.renderCourseProgress) {  
-    window.renderCourseProgress();  
-  }
-
+  if (window.renderCourseProgress) window.renderCourseProgress();  
   select(0, false);  
 })();  
