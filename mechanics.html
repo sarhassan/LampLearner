@@ -34,9 +34,25 @@
           <div id="partsDropdown" class="parts-dropdown glass" hidden>  
             <div class="parts-dropdown-header">  
               <strong>All components</strong>  
-              <button id="closePartsDropdown" type="button" class="dropdown-close">×</button>  
-            </div>  
+              <button id="closePartsDropdown" type="button" class="dropdown-close" aria-label="Close dropdown">×</button>  
+            </div>
+
+            <div class="parts-dropdown-tools">  
+              <input  
+                id="partsSearch"  
+                class="parts-search"  
+                type="search"  
+                placeholder="Search parts..."  
+                aria-label="Search parts"  
+              >  
+              <label class="filter-toggle">  
+                <input id="showUnviewedOnly" type="checkbox">  
+                <span>Show only unviewed</span>  
+              </label>  
+            </div>
+
             <ol id="partsList"></ol>  
+            <p id="partsEmptyState" class="parts-empty hidden">No matching parts.</p>  
           </div>  
         </div>  
       </div>  
