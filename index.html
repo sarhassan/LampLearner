@@ -8,30 +8,21 @@
 </head>  
 <body class="landing-body">  
   <main class="landing-shell">  
-    <section class="splash-screen" id="splashScreen">  
-      <div class="splash-card glass">  
-        <div class="sparkle-row">  
-          <span>✦</span>  
-          <span>◐</span>  
-          <span>✦</span>  
-        </div>  
+    <section class="welcome-screen" id="welcomeScreen">  
+      <div class="welcome-card glass">  
         <h1>Welcome to Lamp Learner</h1>  
         <p>Interactive slit lamp training</p>  
       </div>  
     </section>
 
-    <section class="intro-panel hidden" id="introPanel">  
-      <div class="intro-card glass">  
-        <small class="eyebrow">SLIT LAMP TRAINING</small>  
-        <h2>Learn the slit lamp step by step</h2>  
-        <p>  
-          Start with mechanics, complete the image-based quiz, then continue to  
-          anterior and posterior segment modules.  
-        </p>
+    <section class="dashboard-screen hidden" id="dashboardScreen">  
+      <div class="dashboard-card glass">  
+        <small class="eyebrow">TRAINING DASHBOARD</small>  
+        <h2>Course Progress</h2>
 
-        <div class="overall-progress-card home-progress-card">  
-          <div class="overall-progress-top">  
-            <span>Overall course progress</span>  
+        <div class="progress-panel">  
+          <div class="progress-row">  
+            <span>Overall completeness</span>  
             <strong id="overallProgressText">0%</strong>  
           </div>  
           <div class="overall-track">  
@@ -39,41 +30,70 @@
           </div>  
         </div>
 
-        <div class="home-module-grid">  
-          <div class="home-module-card active">  
-            <small>MODULE 1</small>  
-            <strong>Mechanics</strong>  
-          </div>  
-          <div class="home-module-card">  
-            <small>MODULE 2</small>  
-            <strong>Anterior</strong>  
-          </div>  
-          <div class="home-module-card">  
-            <small>MODULE 3</small>  
-            <strong>Posterior</strong>  
-          </div>  
-        </div>
+        <div class="module-progress-grid">  
+          <a id="mechanicsCard" class="module-progress-card unlocked" href="mechanics.html">  
+            <div class="module-card-top">  
+              <small>MODULE 1</small>  
+              <span class="status-pill">Available</span>  
+            </div>  
+            <h3>Mechanics</h3>  
+            <p>Learn the slit lamp parts and controls.</p>  
+            <div class="mini-progress">  
+              <div class="overall-track">  
+                <i id="mechanicsProgressFill"></i>  
+              </div>  
+              <strong id="mechanicsProgressText">0%</strong>  
+            </div>  
+          </a>
 
-        <a href="mechanics.html" class="cute-btn primary-btn">Start Module 1</a>  
+          <a id="anteriorCard" class="module-progress-card locked" href="anterior.html" aria-disabled="true">  
+            <div class="module-card-top">  
+              <small>MODULE 2</small>  
+              <span class="status-pill locked-pill">Locked</span>  
+            </div>  
+            <h3>Anterior</h3>  
+            <p>Continue after completing mechanics.</p>  
+            <div class="mini-progress">  
+              <div class="overall-track">  
+                <i id="anteriorProgressFill"></i>  
+              </div>  
+              <strong id="anteriorProgressText">0%</strong>  
+            </div>  
+          </a>
+
+          <a id="posteriorCard" class="module-progress-card locked" href="posterior.html" aria-disabled="true">  
+            <div class="module-card-top">  
+              <small>MODULE 3</small>  
+              <span class="status-pill locked-pill">Locked</span>  
+            </div>  
+            <h3>Posterior</h3>  
+            <p>Continue after completing mechanics.</p>  
+            <div class="mini-progress">  
+              <div class="overall-track">  
+                <i id="posteriorProgressFill"></i>  
+              </div>  
+              <strong id="posteriorProgressText">0%</strong>  
+            </div>  
+          </a>  
+        </div>  
       </div>  
     </section>  
   </main>
 
   <script src="js/progress.js"></script>  
   <script>  
-    const splash = document.getElementById("splashScreen");  
-    const intro = document.getElementById("introPanel");
+    const welcomeScreen = document.getElementById("welcomeScreen");  
+    const dashboardScreen = document.getElementById("dashboardScreen");
 
     setTimeout(() => {  
-      splash.classList.add("fade-away");  
+      welcomeScreen.classList.add("fade-away");  
       setTimeout(() => {  
-        splash.style.display = "none";  
-        intro.classList.remove("hidden");  
-        intro.classList.add("fade-in");  
+        welcomeScreen.style.display = "none";  
+        dashboardScreen.classList.remove("hidden");  
+        dashboardScreen.classList.add("fade-in");  
+        renderDashboardProgress();  
       }, 900);  
-    }, 2000);
-
-    renderCourseProgress();  
+    }, 1800);  
   </script>  
 </body>  
 </html>  
