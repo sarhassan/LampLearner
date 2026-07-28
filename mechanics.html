@@ -3,16 +3,16 @@
 <head>  
   <meta charset="utf-8">  
   <meta name="viewport" content="width=device-width,initial-scale=1">  
-  <title>Slit Lamp Academy — Mechanics</title>  
+  <title>Lamp Learner — Mechanics</title>  
   <link rel="stylesheet" href="css/styles.css">  
 </head>  
 <body>  
   <main class="app">  
-    <header>  
+    <header class="glass-header">  
       <div class="brand">  
         <span class="logo">◐</span>  
         <div>  
-          <h1>Slit Lamp Academy</h1>  
+          <h1>Lamp Learner</h1>  
           <p>Interactive clinical skills training</p>  
         </div>  
       </div>
@@ -24,7 +24,7 @@
       </div>  
     </header>
 
-    <div class="overall-progress-bar">  
+    <div class="overall-progress-bar glass-strip">  
       <div class="overall-progress-inner">  
         <small>Overall course progress</small>  
         <div class="overall-track">  
@@ -34,7 +34,7 @@
       </div>  
     </div>
 
-    <div class="progress">  
+    <div class="progress glass-strip">  
       <div>  
         <small>Lesson progress</small>  
         <strong id="progressLabel"></strong>  
@@ -44,7 +44,7 @@
     </div>
 
     <div class="workspace">  
-      <nav>  
+      <nav class="glass-panel">  
         <div class="navTitle">  
           <small>INSTRUMENT GUIDE</small>  
           <h2>Learn the parts</h2>  
@@ -54,21 +54,23 @@
       </nav>
 
       <section class="stage">  
-        <div class="stageTitle">  
-          <small>INTERACTIVE DIAGRAM</small>  
-          <h2>Explore the Haag-Streit slit lamp</h2>  
-          <p>Choose a numbered marker to learn its purpose and use.</p>  
-        </div>
+        <div class="stageCard glass-panel">  
+          <div class="stageTitle">  
+            <small>INTERACTIVE DIAGRAM</small>  
+            <h2>Explore the slit lamp</h2>  
+            <p>Choose a numbered marker to learn its purpose and use.</p>  
+          </div>
 
-        <div class="imageWrap">  
-          <img src="images/slitlamp.png" alt="Haag-Streit slit lamp">  
-          <div id="hotspots"></div>  
-        </div>
+          <div class="imageWrap">  
+            <img src="images/slitlamp.png" alt="Haag-Streit slit lamp">  
+            <div id="hotspots"></div>  
+          </div>
 
-        <p class="hint">Select a component from the guide, or explore the image directly.</p>  
+          <p class="hint">Select a component from the guide, or explore the image directly.</p>  
+        </div>  
       </section>
 
-      <aside id="teachingPanel">  
+      <aside id="teachingPanel" class="glass-panel">  
         <small id="partNumber"></small>  
         <h2 id="partName"></h2>  
         <div class="rule"></div>
@@ -107,7 +109,7 @@
       </aside>  
     </div>
 
-    <footer>  
+    <footer class="glass-footer">  
       <button id="previous">  
         <span>←</span>  
         <small>Previous</small>  
@@ -128,10 +130,10 @@
   </main>
 
   <div class="quizOverlay" id="quizOverlay" hidden>  
-    <section class="quizCard" role="dialog" aria-modal="true" aria-labelledby="quizTitle">  
+    <section class="quizCard glass" role="dialog" aria-modal="true" aria-labelledby="quizTitle">  
       <button class="quizClose" id="quizClose" aria-label="Close quiz">×</button>  
       <small>KNOWLEDGE CHECK</small>  
-      <h2 id="quizTitle">Learn the Parts Quiz</h2>  
+      <h2 id="quizTitle">Mechanics Quiz</h2>  
       <p>Click the correct location on the slit lamp image.</p>
 
       <div id="quizForm">  
@@ -143,7 +145,7 @@
         <h3 id="quizPrompt"></h3>
 
         <div class="quizImageWrap">  
-          <img src="images/slitlamp.png" alt="Haag-Streit slit lamp for image-identification quiz">  
+          <img src="images/slitlamp.png" alt="Slit lamp for quiz">  
           <div id="quizHotspots"></div>  
         </div>  
       </div>
@@ -156,12 +158,12 @@
       <p class="quizResult" id="quizResult" aria-live="polite"></p>
 
       <div id="moduleCompleteActions" class="module-complete-actions" hidden>  
-        <h3>Module 1 complete 🎉</h3>  
-          <p>You can continue to the next sections.</p>  
+        <h3>Module complete ✨</h3>  
+        <p>You can continue to the next sections.</p>  
         <div class="module-links">  
-        <a href="anterior.html" class="continue-btn">Go to Anterior</a>  
-        <a href="posterior.html" class="continue-btn secondary">Go to Posterior</a>  
-    </div>  
+          <a href="anterior.html" class="cute-btn primary-btn">Go to Anterior</a>  
+          <a href="posterior.html" class="cute-btn secondary-btn">Go to Posterior</a>  
+        </div>  
       </div>  
     </section>  
   </div>
