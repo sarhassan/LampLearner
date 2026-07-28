@@ -19,7 +19,11 @@
     const b = document.createElement("button");
 
     b.innerHTML = `<span>${part.id}</span><em>${part.name}</em><i>›</i>`;  
-    b.onclick = () => select(i, true, false);  
+    b.onclick = () => {  
+      select(i, true, false);  
+      closePartsDropdown();  
+    };
+
     li.appendChild(b);  
     partsList.appendChild(li);
 
@@ -32,7 +36,13 @@
     h.onclick = () => select(i, true, false);  
     hotspots.appendChild(h);
 
-    dots.appendChild(document.createElement("i"));  
+    const dot = document.createElement("button");  
+    dot.type = "button";  
+    dot.className = "dot-button";  
+    dot.setAttribute("aria-label", `Go to part ${part.id}: ${part.name}`);  
+    dot.title = `${part.id}. ${part.name}`;  
+    dot.onclick = () => select(i, true, false);  
+    dots.appendChild(dot);  
   });
 
   function updateProgress() {  
@@ -43,8 +53,10 @@
     $("progressBar").style.width = `${percent}%`;  
     $("progressPercent").textContent = percent + "%";
 
-    document.querySelectorAll("#dots i").forEach((d, n) => {  
+    document.querySelectorAll("#dots .dot-button").forEach((d, n) => {  
       d.classList.toggle("done", viewed.has(n));  
+      d.classList.toggle("active", n === selected);  
+      d.textContent = n + 1;  
     });
 
     if (window.setMechanicsPercent) {  
@@ -53,12 +65,12 @@
   }
 
   function positionTeachingPanel(i) {  
-    if (!teachingPanel || !imageWrap) return;
+    if (!teachingPanel || !imageWrap || window.innerWidth <= 980) return;
 
     const spot = pos[i];  
     const cardWidth = 340;  
-    const cardHeight = 360;  
-    const padding = 18;
+    const cardHeight = Math.min(420, teachingPanel.offsetHeight || 380);  
+    const padding = 20;
 
     const wrapWidth = imageWrap.clientWidth;  
     const wrapHeight = imageWrap.clientHeight;
@@ -70,9 +82,9 @@
     let top = spotY - cardHeight / 2;
 
     if (spot.x < 50) {  
-      left = spotX + 50;  
+      left = spotX + 55;  
     } else {  
-      left = spotX - cardWidth - 50;  
+      left = spotX - cardWidth - 55;  
     }
 
     if (top < padding) top = padding;  
@@ -152,22 +164,39 @@
     if (e.key === "ArrowRight") select(selected + 1);  
   });
 
-  const guideToggle = $("toggleGuide");  
-  const guideDrawer = $("guideDrawer");
+  const togglePartsDropdown = $("togglePartsDropdown");  
+  const closePartsDropdownBtn = $("closePartsDropdown");  
+  const partsDropdown = $("partsDropdown");
 
-  if (guideToggle && guideDrawer) {  
-    guideToggle.addEventListener("click", () => {  
-      const hidden = guideDrawer.hasAttribute("hidden");
+  function openPartsDropdown() {  
+    if (!partsDropdown) return;  
+    partsDropdown.hidden = false;  
+    togglePartsDropdown?.setAttribute("aria-expanded", "true");  
+  }
 
-      if (hidden) {  
-        guideDrawer.removeAttribute("hidden");  
-        guideToggle.setAttribute("aria-expanded", "true");  
-      } else {  
-        guideDrawer.setAttribute("hidden", "");  
-        guideToggle.setAttribute("aria-expanded", "false");  
-      }  
+  function closePartsDropdown() {  
+    if (!partsDropdown) return;  
+    partsDropdown.hidden = true;  
+    togglePartsDropdown?.setAttribute("aria-expanded", "false");  
+  }
+
+  if (togglePartsDropdown && partsDropdown) {  
+    togglePartsDropdown.addEventListener("click", () => {  
+      if (partsDropdown.hidden) openPartsDropdown();  
+      else closePartsDropdown();  
     });  
   }
+
+  if (closePartsDropdownBtn) {  
+    closePartsDropdownBtn.addEventListener("click", closePartsDropdown);  
+  }
+
+  document.addEventListener("click", (e) => {  
+    if (!partsDropdown || partsDropdown.hidden) return;  
+    const clickedInside =  
+      partsDropdown.contains(e.target) || togglePartsDropdown.contains(e.target);  
+    if (!clickedInside) closePartsDropdown();  
+  });
 
   const quizQuestions = [  
     { q: "Click the Magnification Changer (Drum).", a: 1 },  
@@ -292,6 +321,7 @@
 
   document.addEventListener("keydown", (e) => {  
     if (e.key === "Escape" && !$("quizOverlay").hidden) closeQuiz();  
+    if (e.key === "Escape" && partsDropdown && !partsDropdown.hidden) closePartsDropdown();  
   });
 
   if (window.renderCourseProgress) {  
