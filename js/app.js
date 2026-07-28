@@ -58,8 +58,12 @@ const quizQuestions=[
 ];
 let quizIndex=0,quizScore=0,quizAnswered=false;
 function renderQuiz(){  
-  quizIndex=0;quizScore=0;$("quizForm").hidden=false;renderQuizQuestion();  
+  quizIndex=0;  
+  quizScore=0;  
+  $("quizForm").hidden=false;  
+  renderQuizQuestion();  
   $("quizRetry").hidden=true;  
+  if ($("moduleCompleteActions")) $("moduleCompleteActions").hidden = true;  
 }  
 function renderQuizQuestion(){
  quizAnswered=false;
