@@ -117,24 +117,36 @@
     if (!teachingPanel || !imageWrap || window.innerWidth <= 980 || panelDismissed) return;
 
     const spot = pos[i];  
-    const cardWidth = Math.min(300, teachingPanel.offsetWidth || 280);  
-    const cardHeight = Math.min(360, teachingPanel.offsetHeight || 320);  
-    const padding = 18;
-
     const wrapWidth = imageWrap.clientWidth;  
-    const wrapHeight = imageWrap.clientHeight;
-
+    const wrapHeight = imageWrap.clientHeight;  
     const spotX = (spot.x / 100) * wrapWidth;  
     const spotY = (spot.y / 100) * wrapHeight;
 
-    let left;  
-    let top = spotY - cardHeight / 2;
+    const cardWidth = Math.min(290, Math.max(250, teachingPanel.offsetWidth || 270));  
+    const cardHeight = Math.min(340, Math.max(240, teachingPanel.offsetHeight || 300));  
+    const gap = 36;  
+    const padding = 16;
 
-    if (spot.x < 50) {  
-      left = spotX + 48;  
+    let left;  
+    let top;
+
+    const preferRight = spot.x < 50;  
+    const rightX = spotX + gap;  
+    const leftX = spotX - cardWidth - gap;
+
+    if (preferRight && rightX + cardWidth <= wrapWidth - padding) {  
+      left = rightX;  
+    } else if (!preferRight && leftX >= padding) {  
+      left = leftX;  
+    } else if (rightX + cardWidth <= wrapWidth - padding) {  
+      left = rightX;  
+    } else if (leftX >= padding) {  
+      left = leftX;  
     } else {  
-      left = spotX - cardWidth - 48;  
+      left = wrapWidth - cardWidth - padding;  
     }
+
+    top = spotY - cardHeight / 2;
 
     if (top < padding) top = padding;  
     if (top + cardHeight > wrapHeight - padding) {  
@@ -147,7 +159,11 @@
     }
 
     teachingPanel.style.left = `${left}px`;  
-    teachingPanel.style.top = `${top}px`;  
+    teachingPanel.style.top = `${top}px`;
+
+    teachingPanel.classList.remove("callout-left", "callout-right");  
+    if (left > spotX) teachingPanel.classList.add("callout-right");  
+    else teachingPanel.classList.add("callout-left");  
   }
 
   function select(i, track = true, scroll = false) {  
