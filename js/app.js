@@ -22,7 +22,7 @@
     h.style.left = pos[i].x + "%";  
     h.style.top = pos[i].y + "%";  
     h.setAttribute("aria-label", `${part.id}. ${part.name}`);  
-    h.title = `${part.id}. ${part.name}`;  
+    h.title = `${part.id}. ${part.name}`);  
     h.onclick = () => select(i, true, true);  
     $("hotspots").appendChild(h);
 
