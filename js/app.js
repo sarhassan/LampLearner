@@ -6,6 +6,8 @@
   const $ = (id) => document.getElementById(id);
 
   let selected = 0;  
+  let panelDismissed = false;
+
   const viewed = new Set();  
   const partButtons = [];  
   const dotButtons = [];
@@ -27,6 +29,7 @@
     const b = document.createElement("button");  
     b.innerHTML = `<span>${part.id}</span><em>${part.name}</em><i>›</i>`;  
     b.onclick = () => {  
+      panelDismissed = false;  
       select(i, true, false);  
       closePartsDropdown();  
     };
@@ -41,7 +44,10 @@
     h.style.top = pos[i].y + "%";  
     h.setAttribute("aria-label", `${part.id}. ${part.name}`);  
     h.title = `${part.id}. ${part.name}`;  
-    h.onclick = () => select(i, true, false);  
+    h.onclick = () => {  
+      panelDismissed = false;  
+      select(i, true, false);  
+    };  
     hotspots.appendChild(h);
 
     const dot = document.createElement("button");  
@@ -49,7 +55,10 @@
     dot.className = "dot-button";  
     dot.setAttribute("aria-label", `Go to part ${part.id}: ${part.name}`);  
     dot.title = `${part.id}. ${part.name}`;  
-    dot.onclick = () => select(i, true, false);  
+    dot.onclick = () => {  
+      panelDismissed = false;  
+      select(i, true, false);  
+    };  
     dots.appendChild(dot);  
     dotButtons.push(dot);  
   });
@@ -94,13 +103,23 @@
     applyPartFilters();  
   }
 
+  function hideTeachingPanel() {  
+    if (!teachingPanel) return;  
+    teachingPanel.classList.add("hidden");  
+  }
+
+  function showTeachingPanel() {  
+    if (!teachingPanel) return;  
+    teachingPanel.classList.remove("hidden");  
+  }
+
   function positionTeachingPanel(i) {  
-    if (!teachingPanel || !imageWrap || window.innerWidth <= 980) return;
+    if (!teachingPanel || !imageWrap || window.innerWidth <= 980 || panelDismissed) return;
 
     const spot = pos[i];  
-    const cardWidth = Math.min(360, teachingPanel.offsetWidth || 340);  
-    const cardHeight = Math.min(430, teachingPanel.offsetHeight || 380);  
-    const padding = 20;
+    const cardWidth = Math.min(300, teachingPanel.offsetWidth || 280);  
+    const cardHeight = Math.min(360, teachingPanel.offsetHeight || 320);  
+    const padding = 18;
 
     const wrapWidth = imageWrap.clientWidth;  
     const wrapHeight = imageWrap.clientHeight;
@@ -112,13 +131,9 @@
     let top = spotY - cardHeight / 2;
 
     if (spot.x < 50) {  
-      left = spotX + 60;  
-      teachingPanel.classList.remove("callout-left");  
-      teachingPanel.classList.add("callout-right");  
+      left = spotX + 48;  
     } else {  
-      left = spotX - cardWidth - 60;  
-      teachingPanel.classList.remove("callout-right");  
-      teachingPanel.classList.add("callout-left");  
+      left = spotX - cardWidth - 48;  
     }
 
     if (top < padding) top = padding;  
@@ -174,28 +189,46 @@
       selected === parts.length - 1 && viewed.size === parts.length  
     );
 
-    updateProgress();  
-    positionTeachingPanel(selected);
+    updateProgress();
 
-    if (scroll && window.innerWidth < 1000) {  
+    if (!panelDismissed) {  
+      showTeachingPanel();  
+      positionTeachingPanel(selected);  
+    }
+
+    if (scroll && window.innerWidth < 1000 && !panelDismissed) {  
       teachingPanel.scrollIntoView({ behavior: "smooth" });  
     }  
   }
 
   window.addEventListener("resize", () => {  
-    positionTeachingPanel(selected);  
+    if (!panelDismissed) positionTeachingPanel(selected);  
   });
 
-  $("previous").onclick = () => select(selected - 1);  
-  $("next").onclick = () =>  
-    selected === parts.length - 1 && viewed.size === parts.length  
-      ? openQuiz()  
-      : select(selected + 1);
+  $("previous").onclick = () => {  
+    panelDismissed = false;  
+    select(selected - 1);  
+  };
+
+  $("next").onclick = () => {  
+    if (selected === parts.length - 1 && viewed.size === parts.length) {  
+      openQuiz();  
+      return;  
+    }  
+    panelDismissed = false;  
+    select(selected + 1);  
+  };
 
   document.addEventListener("keydown", (e) => {  
     if (!$("quizOverlay").hidden) return;  
-    if (e.key === "ArrowLeft") select(selected - 1);  
-    if (e.key === "ArrowRight") select(selected + 1);  
+    if (e.key === "ArrowLeft") {  
+      panelDismissed = false;  
+      select(selected - 1);  
+    }  
+    if (e.key === "ArrowRight") {  
+      panelDismissed = false;  
+      select(selected + 1);  
+    }  
   });
 
   const togglePartsDropdown = $("togglePartsDropdown");  
@@ -240,6 +273,24 @@
       partsDropdown.contains(e.target) || togglePartsDropdown.contains(e.target);  
     if (!clickedInside) closePartsDropdown();  
   });
+
+  const closeTeachingPanelBtn = $("closeTeachingPanel");  
+  if (closeTeachingPanelBtn) {  
+    closeTeachingPanelBtn.addEventListener("click", () => {  
+      panelDismissed = true;  
+      hideTeachingPanel();  
+    });  
+  }
+
+  const resetBtn = $("resetMechanicsProgressBtn");  
+  if (resetBtn) {  
+    resetBtn.addEventListener("click", () => {  
+      if (confirm("Reset all stored progress for this browser?")) {  
+        resetCourseProgress();  
+        window.location.href = "index.html";  
+      }  
+    });  
+  }
 
   const quizQuestions = [  
     { q: "Click the Magnification Changer (Drum).", a: 1 },  
