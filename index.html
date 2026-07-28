@@ -46,7 +46,14 @@
             </div>  
           </a>
 
-          <a id="anteriorCard" class="module-progress-card locked" href="#">  
+          <div  
+            id="anteriorCard"  
+            class="module-progress-card locked"  
+            tabindex="0"  
+            role="button"  
+            aria-disabled="true"  
+            data-locked-message="Complete Mechanics to unlock Anterior."  
+          >  
             <div class="module-card-top">  
               <small>MODULE 2</small>  
               <span class="status-pill locked-pill">Locked</span>  
@@ -59,9 +66,17 @@
               </div>  
               <strong id="anteriorProgressText">0%</strong>  
             </div>  
-          </a>
+            <span class="locked-tooltip">Complete Mechanics to unlock Anterior.</span>  
+          </div>
 
-          <a id="posteriorCard" class="module-progress-card locked" href="#">  
+          <div  
+            id="posteriorCard"  
+            class="module-progress-card locked"  
+            tabindex="0"  
+            role="button"  
+            aria-disabled="true"  
+            data-locked-message="Complete Mechanics to unlock Posterior."  
+          >  
             <div class="module-card-top">  
               <small>MODULE 3</small>  
               <span class="status-pill locked-pill">Locked</span>  
@@ -74,7 +89,8 @@
               </div>  
               <strong id="posteriorProgressText">0%</strong>  
             </div>  
-          </a>  
+            <span class="locked-tooltip">Complete Mechanics to unlock Posterior.</span>  
+          </div>  
         </div>  
       </div>  
     </section>  
