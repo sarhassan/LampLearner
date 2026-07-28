@@ -8,6 +8,10 @@
   let selected = 0;  
   const viewed = new Set();
 
+  const partsList = $("partsList");  
+  const hotspots = $("hotspots");  
+  const dots = $("dots");
+
   parts.forEach((part, i) => {  
     const li = document.createElement("li");  
     const b = document.createElement("button");
@@ -15,18 +19,18 @@
     b.innerHTML = `<span>${part.id}</span><em>${part.name}</em><i>›</i>`;  
     b.onclick = () => select(i, true, true);  
     li.appendChild(b);  
-    $("partsList").appendChild(li);
+    partsList.appendChild(li);
 
     const h = document.createElement("button");  
     h.className = "hotspot";  
     h.style.left = pos[i].x + "%";  
     h.style.top = pos[i].y + "%";  
     h.setAttribute("aria-label", `${part.id}. ${part.name}`);  
-    h.title = `${part.id}. ${part.name}`;
+    h.title = `${part.id}. ${part.name}`;  
     h.onclick = () => select(i, true, true);  
-    $("hotspots").appendChild(h);
+    hotspots.appendChild(h);
 
-    $("dots").appendChild(document.createElement("i"));  
+    dots.appendChild(document.createElement("i"));  
   });
 
   function updateProgress() {  
@@ -39,7 +43,11 @@
 
     document.querySelectorAll("#dots i").forEach((d, n) => {  
       d.classList.toggle("done", viewed.has(n));  
-    });  
+    });
+
+    if (window.setMechanicsPercent) {  
+      window.setMechanicsPercent(percent);  
+    }  
   }
 
   function select(i, track = true, scroll = false) {  
@@ -50,11 +58,8 @@
 
     document.querySelectorAll("#partsList button").forEach((b, n) => {  
       b.classList.toggle("active", n === selected);  
-      if (n === selected) {  
-        b.setAttribute("aria-current", "step");  
-      } else {  
-        b.removeAttribute("aria-current");  
-      }  
+      if (n === selected) b.setAttribute("aria-current", "step");  
+      else b.removeAttribute("aria-current");  
     });
 
     document.querySelectorAll(".hotspot").forEach((b, n) => {  
@@ -68,14 +73,14 @@
       $(k + "Text").textContent = p[k];  
     });
 
-    $("lessonCount").textContent = `Lesson ${selected + 1} of ${parts.length}`;  
-    $("previousName").textContent = selected ? parts[selected - 1].name : "Introduction";  
+    $("lessonCount").textContent = `Part ${selected + 1} of ${parts.length}`;  
+    $("previousName").textContent = selected ? parts[selected - 1].name : "Start";  
     $("nextName").textContent =  
       selected < parts.length - 1  
         ? parts[selected + 1].name  
         : viewed.size === parts.length  
-        ? "Start the quiz"  
-        : "Review remaining parts";
+        ? "Start quiz"  
+        : "Review remaining";
 
     $("previous").disabled = selected === 0;  
     $("next").disabled = selected === parts.length - 1 && viewed.size < parts.length;  
@@ -102,6 +107,24 @@
     if (e.key === "ArrowLeft") select(selected - 1);  
     if (e.key === "ArrowRight") select(selected + 1);  
   });
+
+  const guideToggle = $("toggleGuide");  
+  const guidePanel = $("guidePanel");
+
+  if (guideToggle && guidePanel) {  
+    guideToggle.addEventListener("click", () => {  
+      const isHidden = guidePanel.hasAttribute("hidden");  
+      if (isHidden) {  
+        guidePanel.removeAttribute("hidden");  
+        guideToggle.textContent = "Hide Guide";  
+        guideToggle.setAttribute("aria-expanded", "true");  
+      } else {  
+        guidePanel.setAttribute("hidden", "");  
+        guideToggle.textContent = "Show Guide";  
+        guideToggle.setAttribute("aria-expanded", "false");  
+      }  
+    });  
+  }
 
   const quizQuestions = [  
     { q: "Click the Magnification Changer (Drum).", a: 1 },  
@@ -166,8 +189,8 @@
 
     $("quizScore").textContent = `Score: ${quizScore}`;  
     $("quizResult").textContent = correct  
-      ? "Correct!"  
-      : "Not quite. The correct location is highlighted in green.";  
+      ? "Correct."  
+      : "Not quite. The correct location is highlighted.";  
     $("quizResult").className = `quizResult ${correct ? "correctText" : "incorrectText"}`;  
     $("quizNext").textContent =  
       quizIndex === quizQuestions.length - 1 ? "See results" : "Next question";  
@@ -206,7 +229,7 @@
     $("quizResult").textContent =  
       quizScore === quizQuestions.length  
         ? `Excellent — ${quizScore} of ${quizQuestions.length} correct.`  
-        : `You identified ${quizScore} of ${quizQuestions.length} components correctly.`;
+        : `You identified ${quizScore} of ${quizQuestions.length} correctly.`;
 
     if (window.markCourseStepComplete) {  
       window.markCourseStepComplete("mechanics");  
@@ -227,9 +250,7 @@
   };
 
   document.addEventListener("keydown", (e) => {  
-    if (e.key === "Escape" && !$("quizOverlay").hidden) {  
-      closeQuiz();  
-    }  
+    if (e.key === "Escape" && !$("quizOverlay").hidden) closeQuiz();  
   });
 
   if (window.renderCourseProgress) {  
