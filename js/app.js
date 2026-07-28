@@ -104,15 +104,35 @@ function openQuiz(){
 function closeQuiz(){$("quizOverlay").hidden=true;document.body.classList.remove("quizOpen")}
 $("quizClose").onclick=closeQuiz;
 $("quizOverlay").onclick=e=>{if(e.target===$("quizOverlay"))closeQuiz()};
-$("quizNext").onclick=()=>{
- if(quizIndex<quizQuestions.length-1){quizIndex++;renderQuizQuestion();return;}
- $("quizForm").hidden=true;$("quizNext").hidden=true;$("quizRetry").hidden=false;
- $("quizResult").className="quizResult finalResult";
- $("quizResult").textContent=quizScore===quizQuestions.length
-  ?`Excellent — ${quizScore} of ${quizQuestions.length} correct.`
-  :`You identified ${quizScore} of ${quizQuestions.length} components correctly.`;
-};
+$("quizNext").onclick=()=>{  
+  if(quizIndex<quizQuestions.length-1){  
+    quizIndex++;  
+    renderQuizQuestion();  
+    return;  
+  }
+
+  $("quizForm").hidden=true;  
+  $("quizNext").hidden=true;  
+  $("quizRetry").hidden=false;  
+  $("quizResult").className="quizResult finalResult";  
+  $("quizResult").textContent = quizScore===quizQuestions.length  
+    ? `Excellent — ${quizScore} of ${quizQuestions.length} correct.`  
+    : `You identified ${quizScore} of ${quizQuestions.length} components correctly.`;
+
+  if (window.markCourseStepComplete) {  
+    markCourseStepComplete("mechanics");  
+  }
+
+  if (window.renderCourseProgress) {  
+    renderCourseProgress();  
+  }
+
+  if ($("moduleCompleteActions")) {  
+    $("moduleCompleteActions").hidden = false;  
+  }  
+};  
 $("quizRetry").onclick=()=>{$("quizForm").hidden=false;renderQuiz()};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("quizOverlay").hidden)closeQuiz()});
-select(0,false);
-})();
+if (window.renderCourseProgress) renderCourseProgress();  
+select(0,false);  
+})();  
