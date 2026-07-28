@@ -10,14 +10,16 @@
 
   const partsList = $("partsList");  
   const hotspots = $("hotspots");  
-  const dots = $("dots");
+  const dots = $("dots");  
+  const teachingPanel = $("teachingPanel");  
+  const imageWrap = document.querySelector(".imageWrap");
 
   parts.forEach((part, i) => {  
     const li = document.createElement("li");  
     const b = document.createElement("button");
 
     b.innerHTML = `<span>${part.id}</span><em>${part.name}</em><i>›</i>`;  
-    b.onclick = () => select(i, true, true);  
+    b.onclick = () => select(i, true, false);  
     li.appendChild(b);  
     partsList.appendChild(li);
 
@@ -27,7 +29,7 @@
     h.style.top = pos[i].y + "%";  
     h.setAttribute("aria-label", `${part.id}. ${part.name}`);  
     h.title = `${part.id}. ${part.name}`;  
-    h.onclick = () => select(i, true, true);  
+    h.onclick = () => select(i, true, false);  
     hotspots.appendChild(h);
 
     dots.appendChild(document.createElement("i"));  
@@ -48,6 +50,43 @@
     if (window.setMechanicsPercent) {  
       window.setMechanicsPercent(percent);  
     }  
+  }
+
+  function positionTeachingPanel(i) {  
+    if (!teachingPanel || !imageWrap) return;
+
+    const spot = pos[i];  
+    const cardWidth = 340;  
+    const cardHeight = 360;  
+    const padding = 18;
+
+    const wrapWidth = imageWrap.clientWidth;  
+    const wrapHeight = imageWrap.clientHeight;
+
+    const spotX = (spot.x / 100) * wrapWidth;  
+    const spotY = (spot.y / 100) * wrapHeight;
+
+    let left;  
+    let top = spotY - cardHeight / 2;
+
+    if (spot.x < 50) {  
+      left = spotX + 50;  
+    } else {  
+      left = spotX - cardWidth - 50;  
+    }
+
+    if (top < padding) top = padding;  
+    if (top + cardHeight > wrapHeight - padding) {  
+      top = wrapHeight - cardHeight - padding;  
+    }
+
+    if (left < padding) left = padding;  
+    if (left + cardWidth > wrapWidth - padding) {  
+      left = wrapWidth - cardWidth - padding;  
+    }
+
+    teachingPanel.style.left = `${left}px`;  
+    teachingPanel.style.top = `${top}px`;  
   }
 
   function select(i, track = true, scroll = false) {  
@@ -89,12 +128,17 @@
       selected === parts.length - 1 && viewed.size === parts.length  
     );
 
-    updateProgress();
+    updateProgress();  
+    positionTeachingPanel(selected);
 
     if (scroll && window.innerWidth < 1000) {  
-      $("teachingPanel").scrollIntoView({ behavior: "smooth" });  
+      teachingPanel.scrollIntoView({ behavior: "smooth" });  
     }  
   }
+
+  window.addEventListener("resize", () => {  
+    positionTeachingPanel(selected);  
+  });
 
   $("previous").onclick = () => select(selected - 1);  
   $("next").onclick = () =>  
@@ -109,18 +153,17 @@
   });
 
   const guideToggle = $("toggleGuide");  
-  const guidePanel = $("guidePanel");
+  const guideDrawer = $("guideDrawer");
 
-  if (guideToggle && guidePanel) {  
+  if (guideToggle && guideDrawer) {  
     guideToggle.addEventListener("click", () => {  
-      const isHidden = guidePanel.hasAttribute("hidden");  
-      if (isHidden) {  
-        guidePanel.removeAttribute("hidden");  
-        guideToggle.textContent = "Hide Guide";  
+      const hidden = guideDrawer.hasAttribute("hidden");
+
+      if (hidden) {  
+        guideDrawer.removeAttribute("hidden");  
         guideToggle.setAttribute("aria-expanded", "true");  
       } else {  
-        guidePanel.setAttribute("hidden", "");  
-        guideToggle.textContent = "Show Guide";  
+        guideDrawer.setAttribute("hidden", "");  
         guideToggle.setAttribute("aria-expanded", "false");  
       }  
     });  
@@ -151,8 +194,7 @@
   }
 
   function renderQuizQuestion() {  
-    quizAnswered = false;
-
+    quizAnswered = false;  
     $("quizQuestionCount").textContent = `Question ${quizIndex + 1} of ${quizQuestions.length}`;  
     $("quizScore").textContent = `Score: ${quizScore}`;  
     $("quizPrompt").textContent = quizQuestions[quizIndex].q;  
@@ -209,8 +251,7 @@
     document.body.classList.remove("quizOpen");  
   }
 
-  $("quizClose").onclick = closeQuiz;
-
+  $("quizClose").onclick = closeQuiz;  
   $("quizOverlay").onclick = (e) => {  
     if (e.target === $("quizOverlay")) closeQuiz();  
   };
