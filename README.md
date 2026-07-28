@@ -1,20 +1,26 @@
-# Slit Lamp Academy — Version 1.3
+# Lamp Learner
 
-Open `index.html` in any modern browser. No installation or internet connection is required.
+Interactive slit lamp training website with:  
+- animated landing page  
+- mechanics module with clickable hotspots  
+- built-in quiz  
+- anterior and posterior placeholders  
+- overall course progress
 
 ## Structure
 
-- `index.html` — application shell
-- `css/styles.css` — responsive interface
-- `js/app.js` — interactions, navigation, and progress
-- `js/hotspots.js` — image-relative hotspot coordinates
-- `js/lessons.js` — educational content
-- `images/slitlamp.png` — supplied photograph
+- `index.html` — landing page  
+- `mechanics.html` — interactive mechanics module  
+- `anterior.html` — placeholder module  
+- `posterior.html` — placeholder module  
+- `css/styles.css` — full site styling  
+- `js/lessons.js` — slit lamp content  
+- `js/hotspots.js` — hotspot coordinates  
+- `js/app.js` — mechanics interactivity + quiz  
+- `js/progress.js` — overall course progress via localStorage
 
-Select an image region or sidebar item. Use Previous/Next or the left/right arrow keys to navigate.
-Progress reflects the number of unique components viewed. After all 14 components
-have been reviewed, the final Next button opens a five-question image-identification
-quiz. Each prompt asks the learner to click the correct location on the photograph.
+## Notes
 
-Version 1.3 recalibrates all lesson and quiz click targets to the exact centers
-of the 14 pink reference markers while displaying the clean, unlabeled image.
+Make sure the slit lamp image is present at:
+
+`images/slitlamp.png`  
