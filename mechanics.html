@@ -22,14 +22,8 @@
         <button id="resetMechanicsProgressBtn" class="header-btn" type="button">Reset</button>
 
         <div class="guide-wrap">  
-          <button  
-            id="togglePartsDropdown"  
-            class="header-btn"  
-            type="button"  
-            aria-expanded="false"  
-            aria-controls="partsDropdown"  
-          >  
-            Guide  
+          <button id="togglePartsDropdown" class="header-btn" type="button" aria-expanded="false" aria-controls="partsDropdown">  
+            Jump to Part  
           </button>
 
           <div id="partsDropdown" class="guide-dropdown glass" hidden>  
@@ -39,13 +33,7 @@
             </div>
 
             <div class="guide-tools">  
-              <input  
-                id="partsSearch"  
-                class="guide-search"  
-                type="search"  
-                placeholder="Search parts..."  
-                aria-label="Search parts"  
-              >  
+              <input id="partsSearch" class="guide-search" type="search" placeholder="Search parts..." aria-label="Search parts">  
               <label class="guide-filter">  
                 <input id="showUnviewedOnly" type="checkbox">  
                 <span>Show only unviewed</span>  
@@ -59,7 +47,7 @@
       </div>  
     </header>
 
-    <section class="mechanics-progress glass hover-reveal-progress">
+    <section class="mechanics-progress glass">  
       <div class="overall-progress-inner">  
         <small>Overall completeness</small>  
         <div class="overall-track">  
@@ -74,7 +62,7 @@
         <aside id="leftDock" class="side-dock"></aside>
 
         <div class="image-stage">  
-          <div class="imageWrap bounded-image-wrap">  
+          <div class="bounded-image-wrap">  
             <img src="images/slitlamp.png" alt="Haag-Streit slit lamp">  
             <div id="hotspots"></div>  
           </div>  
@@ -126,7 +114,7 @@
       </div>  
     </section>
 
-    <footer class="mechanics-tray glass" id="mechanicsTray">  
+    <footer class="mechanics-tray glass">  
       <div class="tray-handle" aria-hidden="true"></div>
 
       <div class="tray-content">  
