@@ -9,21 +9,13 @@
 <body class="module-page-body">  
   <main class="simple-module-page">  
     <div class="simple-card glass">  
-      <div class="module-selector simple-top-tabs">  
-        <a class="mod-tab" href="mechanics.html">Mechanics</a>  
-        <a class="mod-tab active" href="anterior.html">Anterior</a>  
-        <a class="mod-tab" href="posterior.html">Posterior</a>  
-      </div>
-
       <small class="eyebrow">MODULE 2</small>  
-      <h1>Anterior Segment</h1>  
-      <p>  
-        This module page is ready for your future anterior segment content.  
-      </p>
+      <h1>Anterior</h1>  
+      <p>This module page is ready for your anterior segment content.</p>
 
       <div class="overall-progress-card">  
         <div class="overall-progress-top">  
-          <span>Overall course progress</span>  
+          <span>Overall completeness</span>  
           <strong id="overallProgressText">0%</strong>  
         </div>  
         <div class="overall-track">  
@@ -32,20 +24,21 @@
       </div>
 
       <div class="simple-actions">  
+        <a href="index.html" class="cute-btn secondary-btn">Back home</a>  
         <button id="completeAnterior" class="cute-btn primary-btn">Mark anterior complete</button>  
-        <a href="posterior.html" class="cute-btn secondary-btn">Go to posterior</a>  
       </div>  
     </div>  
   </main>
 
   <script src="js/progress.js"></script>  
   <script>  
+    protectModuleAccess("anterior");  
     renderCourseProgress();
 
     document.getElementById("completeAnterior").addEventListener("click", () => {  
       markCourseStepComplete("anterior");  
       renderCourseProgress();  
-      alert("Anterior module marked complete.");  
+      alert("Anterior marked complete.");  
     });  
   </script>  
 </body>  
