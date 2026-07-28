@@ -57,13 +57,11 @@ function renderCourseProgress() {
 }
 
 function isAnteriorUnlocked() {  
-  const progress = getCourseProgress();  
-  return progress.mechanics === true;  
+  return getCourseProgress().mechanics === true;  
 }
 
 function isPosteriorUnlocked() {  
-  const progress = getCourseProgress();  
-  return progress.mechanics === true;  
+  return getCourseProgress().mechanics === true;  
 }
 
 function protectModuleAccess(moduleName) {  
@@ -76,23 +74,27 @@ function protectModuleAccess(moduleName) {
   }  
 }
 
-function setLockedCardState(card, locked) {  
-  if (!card) return;
-
-  if (locked) {  
-    card.classList.add("locked");  
-    card.classList.remove("unlocked");  
-    card.setAttribute("aria-disabled", "true");  
-    card.addEventListener("click", preventLockedClick);  
-  } else {  
-    card.classList.remove("locked");  
-    card.classList.add("unlocked");  
-    card.removeAttribute("aria-disabled");  
-    card.removeEventListener("click", preventLockedClick);  
-  }  
+function lockCard(card) {  
+  if (!card) return;  
+  card.classList.add("locked");  
+  card.classList.remove("unlocked");  
+  card.setAttribute("aria-disabled", "true");  
+  card.setAttribute("tabindex", "-1");  
+  card.href = "#";  
+  card.addEventListener("click", stopLockedCard);  
 }
 
-function preventLockedClick(e) {  
+function unlockCard(card, href) {  
+  if (!card) return;  
+  card.classList.remove("locked");  
+  card.classList.add("unlocked");  
+  card.removeAttribute("aria-disabled");  
+  card.removeAttribute("tabindex");  
+  card.href = href;  
+  card.removeEventListener("click", stopLockedCard);  
+}
+
+function stopLockedCard(e) {  
   e.preventDefault();  
 }
 
@@ -121,8 +123,17 @@ function renderDashboardProgress() {
   const anteriorCard = document.getElementById("anteriorCard");  
   const posteriorCard = document.getElementById("posteriorCard");
 
-  setLockedCardState(anteriorCard, !isAnteriorUnlocked());  
-  setLockedCardState(posteriorCard, !isPosteriorUnlocked());  
+  if (isAnteriorUnlocked()) {  
+    unlockCard(anteriorCard, "anterior.html");  
+  } else {  
+    lockCard(anteriorCard);  
+  }
+
+  if (isPosteriorUnlocked()) {  
+    unlockCard(posteriorCard, "posterior.html");  
+  } else {  
+    lockCard(posteriorCard);  
+  }  
 }
 
 function resetCourseProgress() {  
