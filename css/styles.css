@@ -1143,3 +1143,288 @@ article p {
     height: 40px;  
   }  
 }  
+
+/* ===== Mechanics no-overlap patch ===== */
+
+:root {  
+  --primary: #4a2383;  
+  --primary-dark: #381a66;  
+  --primary-light: #6a4a9a;  
+  --primary-pale: #ece6f5;  
+}
+
+/* stage becomes a 3-column dock layout */  
+.mechanics-clean .mechanics-stage {  
+  position: absolute;  
+  inset: 0;  
+  padding: 118px 10px 72px;  
+}
+
+.mechanics-clean .imageWrap-full {  
+  display: grid;  
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) minmax(240px, 300px);  
+  align-items: stretch;  
+  width: 100%;  
+  height: 100%;  
+  gap: 10px;  
+}
+
+/* image always lives in the middle column */  
+.mechanics-clean .imageWrap-full > img,  
+.mechanics-clean .imageWrap-full > #hotspots {  
+  grid-column: 2;  
+}
+
+.mechanics-clean .imageWrap-full > img {  
+  width: 100%;  
+  height: 100%;  
+  object-fit: contain;  
+  transform: scale(1.08);  
+}
+
+/* info card docks left or right, never over image */  
+.mechanics-clean .floating-hotspot-card {  
+  position: relative;  
+  grid-row: 1;  
+  align-self: center;  
+  justify-self: stretch;  
+  width: 100%;  
+  min-width: 0;  
+  max-width: 300px;  
+  max-height: 52vh;  
+  border-radius: 18px;  
+  background: rgba(255, 255, 255, 0.94);  
+  border: 1px solid rgba(74, 35, 131, 0.08);  
+  overflow: hidden;  
+  left: auto !important;  
+  top: auto !important;  
+  transition: opacity 0.2s ease, transform 0.2s ease;  
+}
+
+.mechanics-clean .floating-hotspot-card.dock-left {  
+  grid-column: 1;  
+  justify-self: end;  
+}
+
+.mechanics-clean .floating-hotspot-card.dock-right {  
+  grid-column: 3;  
+  justify-self: start;  
+}
+
+.mechanics-clean .floating-hotspot-card::after {  
+  display: none !important;  
+}
+
+.mechanics-clean .panel-scroll {  
+  max-height: 52vh;  
+  overflow: auto;  
+  padding: 14px;  
+}
+
+.mechanics-clean .panel-close {  
+  position: absolute;  
+  top: 8px;  
+  right: 8px;  
+  z-index: 3;  
+}
+
+/* compact card so it doesn't dominate */  
+.mechanics-clean .floating-hotspot-card h2 {  
+  margin: 6px 0 10px;  
+  font-size: 18px;  
+  line-height: 1.2;  
+}
+
+.mechanics-clean .floating-hotspot-card .rule {  
+  width: 30px;  
+  height: 3px;  
+  margin-bottom: 10px;  
+  background: var(--primary);  
+}
+
+.mechanics-clean .floating-hotspot-card article {  
+  grid-template-columns: 22px 1fr;  
+  gap: 8px;  
+  padding: 10px 0;  
+}
+
+.mechanics-clean .floating-hotspot-card article > i {  
+  width: 22px;  
+  height: 22px;  
+  border-radius: 7px;  
+  font-size: 11px;  
+}
+
+.mechanics-clean .floating-hotspot-card article h3 {  
+  margin: 0 0 4px;  
+  font-size: 11px;  
+}
+
+.mechanics-clean .floating-hotspot-card article p {  
+  font-size: 10.5px;  
+  line-height: 1.45;  
+}
+
+.mechanics-clean .floating-hotspot-card .pearl,  
+.mechanics-clean .floating-hotspot-card .mistake {  
+  padding: 9px;  
+  border-radius: 10px;  
+  margin-top: 6px;  
+}
+
+/* smaller top UI */  
+.mechanics-clean .mechanics-topbar {  
+  min-height: 60px;  
+  padding: 8px 14px;  
+}
+
+.mechanics-clean .mechanics-progress {  
+  top: 84px;  
+  padding: 10px 14px;  
+}
+
+.mechanics-clean .brand p {  
+  font-size: 11px;  
+}
+
+.mechanics-clean .logo {  
+  width: 40px;  
+  height: 40px;  
+  font-size: 21px;  
+}
+
+/* bottom tray should stay out of the way until hover/focus */  
+.mechanics-clean .mechanics-footer {  
+  left: 10px;  
+  right: 10px;  
+  bottom: 8px;  
+  padding: 10px 12px;  
+  border-radius: 20px;  
+  grid-template-columns: 1fr minmax(260px, 470px) 1fr;  
+  transform: translateY(calc(100% - 54px));  
+  opacity: 0.58;  
+  transition: transform 0.24s ease, opacity 0.24s ease;  
+}
+
+.mechanics-clean .mechanics-footer:hover,  
+.mechanics-clean .mechanics-footer:focus-within,  
+.mechanics-clean .mechanics-fullscreen:hover .mechanics-footer {  
+  transform: translateY(0);  
+  opacity: 1;  
+}
+
+.mechanics-clean .bottom-arrow {  
+  min-height: 46px;  
+  padding: 8px 12px;  
+}
+
+.mechanics-clean .bottom-arrow strong {  
+  font-size: 10px;  
+}
+
+.mechanics-clean #lessonCount {  
+  font-size: 10px;  
+}
+
+.mechanics-clean .clickable-dots {  
+  gap: 5px;  
+  margin: 8px 0 10px;  
+}
+
+.mechanics-clean .dot-button {  
+  min-height: 24px;  
+  font-size: 10px;  
+  border-radius: 8px;  
+}
+
+/* active hotspot pulse */  
+.mechanics-clean .hotspot.active::before {  
+  animation: activePulse 1.4s ease-in-out infinite;  
+}
+
+@keyframes activePulse {  
+  0% { box-shadow: 0 0 0 8px rgba(74, 35, 131, 0.10); }  
+  50% { box-shadow: 0 0 0 12px rgba(74, 35, 131, 0.16); }  
+  100% { box-shadow: 0 0 0 8px rgba(74, 35, 131, 0.10); }  
+}
+
+/* on smaller screens, stack naturally */  
+@media (max-width: 980px) {  
+  .mechanics-clean .mechanics-body,  
+  .mechanics-clean {  
+    overflow: auto;  
+  }
+
+  .mechanics-clean .mechanics-topbar,  
+  .mechanics-clean .mechanics-progress,  
+  .mechanics-clean .mechanics-stage,  
+  .mechanics-clean .mechanics-footer {  
+    position: relative;  
+    top: auto;  
+    left: auto;  
+    right: auto;  
+    bottom: auto;  
+    transform: none;  
+    opacity: 1;  
+  }
+
+  .mechanics-clean .mechanics-stage {  
+    padding: 12px 0;  
+  }
+
+  .mechanics-clean .imageWrap-full {  
+    display: flex;  
+    flex-direction: column;  
+    gap: 14px;  
+  }
+
+  .mechanics-clean .imageWrap-full > img,  
+  .mechanics-clean .imageWrap-full > #hotspots,  
+  .mechanics-clean .floating-hotspot-card {  
+    grid-column: auto;  
+  }
+
+  .mechanics-clean .imageWrap-full > img {  
+    height: auto;  
+    max-height: 68vh;  
+    transform: scale(1.02);  
+  }
+
+  .mechanics-clean #hotspots {  
+    position: absolute;  
+    inset: 0 auto auto 0;  
+    width: 100%;  
+    height: min(68vh, 820px);  
+  }
+
+  .mechanics-clean .floating-hotspot-card {  
+    position: relative;  
+    width: 100%;  
+    max-width: none;  
+    max-height: none;  
+  }
+
+  .mechanics-clean .panel-scroll {  
+    max-height: none;  
+  }
+
+  .mechanics-clean .mechanics-footer {  
+    margin-top: 10px;  
+    grid-template-columns: 1fr;  
+  }
+
+  .mechanics-clean .clickable-dots {  
+    grid-template-columns: repeat(7, minmax(0, 1fr));  
+  }  
+}
+
+@media (max-width: 720px) {  
+  .mechanics-clean .clickable-dots {  
+    grid-template-columns: repeat(5, minmax(0, 1fr));  
+  }
+
+  .mechanics-clean .hotspot {  
+    width: 38px;  
+    height: 38px;  
+  }  
+}  
