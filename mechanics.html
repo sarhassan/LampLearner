@@ -6,9 +6,9 @@
   <title>Lamp Learner — Mechanics</title>  
   <link rel="stylesheet" href="css/styles.css">  
 </head>  
-<body class="module-page-body">  
-  <main class="mechanics-app">  
-    <header class="glass-header">  
+<body class="mechanics-body">  
+  <main class="mechanics-fullscreen">  
+    <header class="mechanics-topbar glass">  
       <div class="brand">  
         <span class="logo">◐</span>  
         <div>  
@@ -17,17 +17,17 @@
         </div>  
       </div>
 
-      <div class="header-actions">  
-        <a href="index.html" class="header-link">Home</a>  
-        <button id="toggleGuide" class="guide-toggle" type="button" aria-expanded="false" aria-controls="guidePanel">  
-          Show Guide  
+      <div class="topbar-actions">  
+        <a href="index.html" class="topbar-link">Home</a>  
+        <button id="toggleGuide" class="topbar-button" type="button" aria-expanded="false" aria-controls="guideDrawer">  
+          Guide  
         </button>  
       </div>  
     </header>
 
-    <div class="overall-progress-bar glass-strip">  
+    <div class="mechanics-progress glass">  
       <div class="overall-progress-inner">  
-        <small>Overall course progress</small>  
+        <small>Overall completeness</small>  
         <div class="overall-track">  
           <i id="overallProgressFill"></i>  
         </div>  
@@ -35,103 +35,87 @@
       </div>  
     </div>
 
-    <div class="mechanics-layout">  
-      <aside id="guidePanel" class="guide-drawer glass-panel" hidden>  
-        <div class="navTitle">  
-          <small>INSTRUMENT GUIDE</small>  
-          <h2>All components</h2>  
-          <p>Select any part directly.</p>  
-        </div>  
-        <ol id="partsList"></ol>  
-      </aside>
+    <aside id="guideDrawer" class="guide-drawer glass" hidden>  
+      <div class="navTitle">  
+        <small>INSTRUMENT GUIDE</small>  
+        <h2>All components</h2>  
+        <p>Select any part directly.</p>  
+      </div>  
+      <ol id="partsList"></ol>  
+    </aside>
 
-      <section class="diagram-stage">  
-        <div class="stageCard glass-panel">  
-          <div class="stageTitle">  
-            <small>INTERACTIVE DIAGRAM</small>  
-            <h2>Explore the slit lamp</h2>  
-            <p>Use the arrows below or click directly on the image.</p>  
-          </div>
+    <section class="mechanics-stage">  
+      <div class="imageWrap imageWrap-full">  
+        <img src="images/slitlamp.png" alt="Haag-Streit slit lamp">  
+        <div id="hotspots"></div>
 
-          <div class="diagram-grid">  
-            <div class="image-column">  
-              <div class="imageWrap imageWrap-mechanics">  
-                <img src="images/slitlamp.png" alt="Haag-Streit slit lamp">  
-                <div id="hotspots"></div>  
-              </div>  
-            </div>
+        <aside id="teachingPanel" class="floating-hotspot-card glass">  
+          <small id="partNumber"></small>  
+          <h2 id="partName"></h2>  
+          <div class="rule"></div>
 
-            <div class="info-column">  
-              <aside id="teachingPanel" class="floating-info glass">  
-                <small id="partNumber"></small>  
-                <h2 id="partName"></h2>  
-                <div class="rule"></div>
-
-                <article>  
-                  <i>◎</i>  
-                  <div>  
-                    <h3>Function</h3>  
-                    <p id="functionText"></p>  
-                  </div>  
-                </article>
-
-                <article>  
-                  <i>↗</i>  
-                  <div>  
-                    <h3>How to Use</h3>  
-                    <p id="useText"></p>  
-                  </div>  
-                </article>
-
-                <article class="pearl">  
-                  <i>✦</i>  
-                  <div>  
-                    <h3>Clinical Pearl</h3>  
-                    <p id="pearlText"></p>  
-                  </div>  
-                </article>
-
-                <article class="mistake">  
-                  <i>!</i>  
-                  <div>  
-                    <h3>Common Beginner Mistake</h3>  
-                    <p id="mistakeText"></p>  
-                  </div>  
-                </article>  
-              </aside>  
+          <article>  
+            <i>◎</i>  
+            <div>  
+              <h3>Function</h3>  
+              <p id="functionText"></p>  
             </div>  
-          </div>
+          </article>
 
-          <div class="bottom-nav glass">  
-            <button id="previous" class="bottom-arrow">  
-              <span>←</span>  
-              <div>  
-                <small>Previous</small>  
-                <strong id="previousName"></strong>  
-              </div>  
-            </button>
+          <article>  
+            <i>↗</i>  
+            <div>  
+              <h3>How to Use</h3>  
+              <p id="useText"></p>  
+            </div>  
+          </article>
 
-            <div class="bottom-center">  
-              <span id="lessonCount"></span>  
-              <div id="dots"></div>  
-              <div class="lesson-progress-inline">  
-                <small id="progressLabel"></small>  
-                <div class="track"><i id="progressBar"></i></div>  
-                <b id="progressPercent"></b>  
-              </div>  
-            </div>
+          <article class="pearl">  
+            <i>✦</i>  
+            <div>  
+              <h3>Clinical Pearl</h3>  
+              <p id="pearlText"></p>  
+            </div>  
+          </article>
 
-            <button class="bottom-arrow next" id="next">  
-              <div>  
-                <small>Next</small>  
-                <strong id="nextName"></strong>  
-              </div>  
-              <span>→</span>  
-            </button>  
-          </div>  
+          <article class="mistake">  
+            <i>!</i>  
+            <div>  
+              <h3>Common Beginner Mistake</h3>  
+              <p id="mistakeText"></p>  
+            </div>  
+          </article>  
+        </aside>  
+      </div>  
+    </section>
+
+    <footer class="mechanics-footer glass">  
+      <button id="previous" class="bottom-arrow">  
+        <span>←</span>  
+        <div>  
+          <small>Previous</small>  
+          <strong id="previousName"></strong>  
         </div>  
-      </section>  
-    </div>  
+      </button>
+
+      <div class="bottom-center">  
+        <span id="lessonCount"></span>  
+        <div id="dots"></div>  
+        <div class="lesson-progress-inline">  
+          <small id="progressLabel"></small>  
+          <div class="track"><i id="progressBar"></i></div>  
+          <b id="progressPercent"></b>  
+        </div>  
+      </div>
+
+      <button class="bottom-arrow next" id="next">  
+        <div>  
+          <small>Next</small>  
+          <strong id="nextName"></strong>  
+        </div>  
+        <span>→</span>  
+      </button>  
+    </footer>  
   </main>
 
   <div class="quizOverlay" id="quizOverlay" hidden>  
