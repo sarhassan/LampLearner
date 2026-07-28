@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Slit Lamp Academy — Learn the Parts</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<main class="app">
+  <header>
+    <div class="brand"><span class="logo">◐</span><div><h1>Slit Lamp Academy</h1><p>Interactive clinical skills training</p></div></div>
+    <div class="module"><span>MODULE 1</span><strong>Learn the Parts</strong></div>
+  </header>
+  <div class="progress"><div><small>Lesson progress</small><strong id="progressLabel"></strong></div><div class="track"><i id="progressBar"></i></div><b id="progressPercent"></b></div>
+  <div class="workspace">
+    <nav>
+      <div class="navTitle"><small>INSTRUMENT GUIDE</small><h2>Learn the parts</h2><p>Select a component to explore.</p></div>
+      <ol id="partsList"></ol>
+    </nav>
+    <section class="stage">
+      <div class="stageTitle"><small>INTERACTIVE DIAGRAM</small><h2>Explore the Haag-Streit slit lamp</h2><p>Choose a numbered marker to learn its purpose and use.</p></div>
+      <div class="imageWrap"><img src="images/slitlamp.png" alt="Haag-Streit slit lamp"><div id="hotspots"></div></div>
+      <p class="hint">Select a component from the guide, or explore the image directly.</p>
+    </section>
+    <aside id="teachingPanel">
+      <small id="partNumber"></small><h2 id="partName"></h2><div class="rule"></div>
+      <article><i>◎</i><div><h3>Function</h3><p id="functionText"></p></div></article>
+      <article><i>↗</i><div><h3>How to Use</h3><p id="useText"></p></div></article>
+      <article class="pearl"><i>✦</i><div><h3>Clinical Pearl</h3><p id="pearlText"></p></div></article>
+      <article class="mistake"><i>!</i><div><h3>Common Beginner Mistake</h3><p id="mistakeText"></p></div></article>
+    </aside>
+  </div>
+  <footer>
+    <button id="previous"><span>←</span><small>Previous</small><strong id="previousName"></strong></button>
+    <div><span id="lessonCount"></span><div id="dots"></div></div>
+    <button class="next" id="next"><small>Next</small><strong id="nextName"></strong><span>→</span></button>
+  </footer>
+</main>
+<div class="quizOverlay" id="quizOverlay" hidden>
+  <section class="quizCard" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+    <button class="quizClose" id="quizClose" aria-label="Close quiz">×</button>
+    <small>KNOWLEDGE CHECK</small>
+    <h2 id="quizTitle">Learn the Parts Quiz</h2>
+    <p>Click the correct location on the slit lamp image.</p>
+    <div id="quizForm">
+      <div class="quizStatus"><span id="quizQuestionCount"></span><strong id="quizScore"></strong></div>
+      <h3 id="quizPrompt"></h3>
+      <div class="quizImageWrap">
+        <img src="images/slitlamp.png" alt="Haag-Streit slit lamp for image-identification quiz">
+        <div id="quizHotspots"></div>
+      </div>
+    </div>
+    <div class="quizActions"><button type="button" id="quizNext" hidden>Next question</button><button type="button" id="quizRetry" hidden>Try again</button></div>
+    <p class="quizResult" id="quizResult" aria-live="polite"></p>
+  </section>
+</div>
+<script src="js/lessons.js"></script><script src="js/hotspots.js"></script><script src="js/app.js"></script>
+</body>
+</html>
