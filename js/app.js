@@ -16,10 +16,11 @@
   const hotspots = $("hotspots");  
   const dots = $("dots");  
   const teachingPanel = $("teachingPanel");  
-  const mechanicsStage = document.querySelector(".mechanics-stage");  
   const partsSearch = $("partsSearch");  
   const showUnviewedOnly = $("showUnviewedOnly");  
-  const partsEmptyState = $("partsEmptyState");
+  const partsEmptyState = $("partsEmptyState");  
+  const leftDock = $("leftDock");  
+  const rightDock = $("rightDock");
 
   parts.forEach((part, i) => {  
     const li = document.createElement("li");  
@@ -30,7 +31,7 @@
     b.innerHTML = `<span>${part.id}</span><em>${part.name}</em><i>›</i>`;  
     b.onclick = () => {  
       panelDismissed = false;  
-      select(i, true, false);  
+      select(i, true);  
       closePartsDropdown();  
     };
 
@@ -46,7 +47,7 @@
     h.title = `${part.id}. ${part.name}`;  
     h.onclick = () => {  
       panelDismissed = false;  
-      select(i, true, false);  
+      select(i, true);  
     };  
     hotspots.appendChild(h);
 
@@ -57,7 +58,7 @@
     dot.title = `${part.id}. ${part.name}`;  
     dot.onclick = () => {  
       panelDismissed = false;  
-      select(i, true, false);  
+      select(i, true);  
     };  
     dots.appendChild(dot);  
     dotButtons.push(dot);  
@@ -87,7 +88,7 @@
 
     $("progressLabel").textContent = `${count} of ${parts.length} components viewed`;  
     $("progressBar").style.width = `${percent}%`;  
-    $("progressPercent").textContent = percent + "%";
+    $("progressPercent").textContent = `${percent}%`;
 
     dotButtons.forEach((d, n) => {  
       d.classList.toggle("done", viewed.has(n));  
@@ -104,30 +105,33 @@
   }
 
   function hideTeachingPanel() {  
-    if (!teachingPanel) return;  
     teachingPanel.classList.add("hidden");  
   }
 
   function showTeachingPanel() {  
-    if (!teachingPanel) return;  
     teachingPanel.classList.remove("hidden");  
   }
 
   function dockTeachingPanel(i) {  
-    if (!teachingPanel || !mechanicsStage || window.innerWidth <= 980 || panelDismissed) return;
+    if (window.innerWidth <= 980 || panelDismissed) return;
 
     const spot = pos[i];
 
-    teachingPanel.classList.remove("dock-left", "dock-right");
+    leftDock.innerHTML = "";  
+    rightDock.innerHTML = "";
 
     if (spot.x < 50) {  
+      rightDock.appendChild(teachingPanel);  
+      teachingPanel.classList.remove("dock-left");  
       teachingPanel.classList.add("dock-right");  
     } else {  
+      leftDock.appendChild(teachingPanel);  
+      teachingPanel.classList.remove("dock-right");  
       teachingPanel.classList.add("dock-left");  
     }  
   }
 
-  function select(i, track = true, scroll = false) {  
+  function select(i, track = true) {  
     selected = Math.max(0, Math.min(parts.length - 1, i));  
     const p = parts[selected];
 
@@ -171,15 +175,13 @@
     if (!panelDismissed) {  
       showTeachingPanel();  
       dockTeachingPanel(selected);  
-    }
-
-    if (scroll && window.innerWidth < 1000 && !panelDismissed) {  
-      teachingPanel.scrollIntoView({ behavior: "smooth" });  
     }  
   }
 
   window.addEventListener("resize", () => {  
-    if (!panelDismissed) dockTeachingPanel(selected);  
+    if (!panelDismissed) {  
+      dockTeachingPanel(selected);  
+    }  
   });
 
   $("previous").onclick = () => {  
@@ -197,11 +199,13 @@
   };
 
   document.addEventListener("keydown", (e) => {  
-    if (!$("quizOverlay").hidden) return;  
+    if (!$("quizOverlay").hidden) return;
+
     if (e.key === "ArrowLeft") {  
       panelDismissed = false;  
       select(selected - 1);  
-    }  
+    }
+
     if (e.key === "ArrowRight") {  
       panelDismissed = false;  
       select(selected + 1);  
@@ -213,19 +217,17 @@
   const partsDropdown = $("partsDropdown");
 
   function openPartsDropdown() {  
-    if (!partsDropdown) return;  
     partsDropdown.hidden = false;  
     togglePartsDropdown?.setAttribute("aria-expanded", "true");  
     applyPartFilters();  
   }
 
   function closePartsDropdown() {  
-    if (!partsDropdown) return;  
     partsDropdown.hidden = true;  
     togglePartsDropdown?.setAttribute("aria-expanded", "false");  
   }
 
-  if (togglePartsDropdown && partsDropdown) {  
+  if (togglePartsDropdown) {  
     togglePartsDropdown.addEventListener("click", () => {  
       if (partsDropdown.hidden) openPartsDropdown();  
       else closePartsDropdown();  
@@ -307,8 +309,8 @@
       const b = document.createElement("button");  
       b.type = "button";  
       b.className = "quizHotspot";  
-      b.style.left = spot.x + "%";  
-      b.style.top = spot.y + "%";  
+      b.style.left = `${spot.x}%`;  
+      b.style.top = `${spot.y}%`;  
       b.setAttribute("aria-label", `Location ${i + 1}`);  
       b.onclick = () => answerQuiz(i, b);  
       $("quizHotspots").appendChild(b);  
