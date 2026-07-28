@@ -6,18 +6,25 @@
   const $ = (id) => document.getElementById(id);
 
   let selected = 0;  
-  const viewed = new Set();
+  const viewed = new Set();  
+  const partButtons = [];  
+  const dotButtons = [];
 
   const partsList = $("partsList");  
   const hotspots = $("hotspots");  
   const dots = $("dots");  
   const teachingPanel = $("teachingPanel");  
-  const imageWrap = document.querySelector(".imageWrap");
+  const imageWrap = document.querySelector(".imageWrap");  
+  const partsSearch = $("partsSearch");  
+  const showUnviewedOnly = $("showUnviewedOnly");  
+  const partsEmptyState = $("partsEmptyState");
 
   parts.forEach((part, i) => {  
     const li = document.createElement("li");  
-    const b = document.createElement("button");
+    li.dataset.index = i;  
+    li.dataset.name = `${part.id} ${part.name}`.toLowerCase();
 
+    const b = document.createElement("button");  
     b.innerHTML = `<span>${part.id}</span><em>${part.name}</em><i>›</i>`;  
     b.onclick = () => {  
       select(i, true, false);  
@@ -25,7 +32,8 @@
     };
 
     li.appendChild(b);  
-    partsList.appendChild(li);
+    partsList.appendChild(li);  
+    partButtons.push(b);
 
     const h = document.createElement("button");  
     h.className = "hotspot";  
@@ -43,7 +51,26 @@
     dot.title = `${part.id}. ${part.name}`;  
     dot.onclick = () => select(i, true, false);  
     dots.appendChild(dot);  
+    dotButtons.push(dot);  
   });
+
+  function applyPartFilters() {  
+    const query = (partsSearch?.value || "").trim().toLowerCase();  
+    const unviewedOnly = !!showUnviewedOnly?.checked;  
+    let visibleCount = 0;
+
+    [...partsList.children].forEach((li, i) => {  
+      const matchesQuery = li.dataset.name.includes(query);  
+      const matchesViewed = !unviewedOnly || !viewed.has(i);  
+      const visible = matchesQuery && matchesViewed;  
+      li.classList.toggle("hidden", !visible);  
+      if (visible) visibleCount++;  
+    });
+
+    if (partsEmptyState) {  
+      partsEmptyState.classList.toggle("hidden", visibleCount !== 0);  
+    }  
+  }
 
   function updateProgress() {  
     const count = viewed.size;  
@@ -53,23 +80,26 @@
     $("progressBar").style.width = `${percent}%`;  
     $("progressPercent").textContent = percent + "%";
 
-    document.querySelectorAll("#dots .dot-button").forEach((d, n) => {  
+    dotButtons.forEach((d, n) => {  
       d.classList.toggle("done", viewed.has(n));  
       d.classList.toggle("active", n === selected);  
+      d.classList.toggle("unseen", !viewed.has(n));  
       d.textContent = n + 1;  
     });
 
     if (window.setMechanicsPercent) {  
       window.setMechanicsPercent(percent);  
-    }  
+    }
+
+    applyPartFilters();  
   }
 
   function positionTeachingPanel(i) {  
     if (!teachingPanel || !imageWrap || window.innerWidth <= 980) return;
 
     const spot = pos[i];  
-    const cardWidth = 340;  
-    const cardHeight = Math.min(420, teachingPanel.offsetHeight || 380);  
+    const cardWidth = Math.min(360, teachingPanel.offsetWidth || 340);  
+    const cardHeight = Math.min(430, teachingPanel.offsetHeight || 380);  
     const padding = 20;
 
     const wrapWidth = imageWrap.clientWidth;  
@@ -82,9 +112,13 @@
     let top = spotY - cardHeight / 2;
 
     if (spot.x < 50) {  
-      left = spotX + 55;  
+      left = spotX + 60;  
+      teachingPanel.classList.remove("callout-left");  
+      teachingPanel.classList.add("callout-right");  
     } else {  
-      left = spotX - cardWidth - 55;  
+      left = spotX - cardWidth - 60;  
+      teachingPanel.classList.remove("callout-right");  
+      teachingPanel.classList.add("callout-left");  
     }
 
     if (top < padding) top = padding;  
@@ -107,7 +141,7 @@
 
     if (track) viewed.add(selected);
 
-    document.querySelectorAll("#partsList button").forEach((b, n) => {  
+    partButtons.forEach((b, n) => {  
       b.classList.toggle("active", n === selected);  
       if (n === selected) b.setAttribute("aria-current", "step");  
       else b.removeAttribute("aria-current");  
@@ -172,6 +206,7 @@
     if (!partsDropdown) return;  
     partsDropdown.hidden = false;  
     togglePartsDropdown?.setAttribute("aria-expanded", "true");  
+    applyPartFilters();  
   }
 
   function closePartsDropdown() {  
@@ -189,6 +224,14 @@
 
   if (closePartsDropdownBtn) {  
     closePartsDropdownBtn.addEventListener("click", closePartsDropdown);  
+  }
+
+  if (partsSearch) {  
+    partsSearch.addEventListener("input", applyPartFilters);  
+  }
+
+  if (showUnviewedOnly) {  
+    showUnviewedOnly.addEventListener("change", applyPartFilters);  
   }
 
   document.addEventListener("click", (e) => {  
