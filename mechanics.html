@@ -18,10 +18,27 @@
       </div>
 
       <div class="topbar-actions">  
-        <a href="index.html" class="topbar-link">Home</a>  
-        <button id="toggleGuide" class="topbar-button" type="button" aria-expanded="false" aria-controls="guideDrawer">  
-          Guide  
-        </button>  
+        <a href="index.html" class="topbar-link">Home</a>
+
+        <div class="parts-dropdown-wrap">  
+          <button  
+            id="togglePartsDropdown"  
+            class="topbar-button"  
+            type="button"  
+            aria-expanded="false"  
+            aria-controls="partsDropdown"  
+          >  
+            Jump to Part  
+          </button>
+
+          <div id="partsDropdown" class="parts-dropdown glass" hidden>  
+            <div class="parts-dropdown-header">  
+              <strong>All components</strong>  
+              <button id="closePartsDropdown" type="button" class="dropdown-close">×</button>  
+            </div>  
+            <ol id="partsList"></ol>  
+          </div>  
+        </div>  
       </div>  
     </header>
 
@@ -34,15 +51,6 @@
         <strong id="overallProgressText">0%</strong>  
       </div>  
     </div>
-
-    <aside id="guideDrawer" class="guide-drawer glass" hidden>  
-      <div class="navTitle">  
-        <small>INSTRUMENT GUIDE</small>  
-        <h2>All components</h2>  
-        <p>Select any part directly.</p>  
-      </div>  
-      <ol id="partsList"></ol>  
-    </aside>
 
     <section class="mechanics-stage">  
       <div class="imageWrap imageWrap-full">  
@@ -99,8 +107,10 @@
       </button>
 
       <div class="bottom-center">  
-        <span id="lessonCount"></span>  
-        <div id="dots"></div>  
+        <span id="lessonCount"></span>
+
+        <div id="dots" class="clickable-dots"></div>
+
         <div class="lesson-progress-inline">  
           <small id="progressLabel"></small>  
           <div class="track"><i id="progressBar"></i></div>  
