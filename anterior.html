@@ -1,1 +1,53 @@
+<!doctype html>  
+<html lang="en">  
+<head>  
+  <meta charset="utf-8">  
+  <meta name="viewport" content="width=device-width,initial-scale=1">  
+  <title>Anterior Segment — Lamp Learner</title>  
+  <link rel="stylesheet" href="css/styles.css">  
+</head>  
+<body>  
+  <main class="simple-module-page">  
+    <div class="simple-card">  
+      <div class="module-selector">  
+        <a class="mod-tab" href="mechanics.html">Mechanics</a>  
+        <a class="mod-tab active" href="anterior.html">Anterior</a>  
+        <a class="mod-tab" href="posterior.html">Posterior</a>  
+      </div>
 
+      <small class="eyebrow">MODULE 2</small>  
+      <h1>Anterior Segment</h1>  
+      <p>  
+        This section is where your anterior segment training content will go.  
+        For now, this page acts as a placeholder so your site flow works.  
+      </p>
+
+      <div class="overall-progress-bar simple-progress">  
+        <div class="overall-progress-inner">  
+          <small>Overall course progress</small>  
+          <div class="overall-track">  
+            <i id="overallProgressFill"></i>  
+          </div>  
+          <strong id="overallProgressText">0%</strong>  
+        </div>  
+      </div>
+
+      <div class="simple-actions">  
+        <button id="completeAnterior" class="continue-btn">Mark anterior complete</button>  
+        <a href="posterior.html" class="continue-btn secondary">Go to posterior</a>  
+      </div>  
+    </div>  
+  </main>
+
+  <script src="js/progress.js"></script>  
+  <script>  
+    renderCourseProgress();
+
+    document.getElementById("completeAnterior").addEventListener("click", function () {  
+      markCourseStepComplete("anterior");  
+      renderCourseProgress();  
+      alert("Anterior module marked complete.");  
+    });  
+  </script>  
+</body>  
+</html>  
