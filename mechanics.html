@@ -18,7 +18,8 @@
       </div>
 
       <div class="topbar-actions">  
-        <a href="index.html" class="topbar-link">Home</a>
+        <a href="index.html" class="topbar-link">Home</a>  
+        <button id="resetMechanicsProgressBtn" class="utility-btn" type="button">Reset</button>
 
         <div class="parts-dropdown-wrap">  
           <button  
@@ -28,13 +29,13 @@
             aria-expanded="false"  
             aria-controls="partsDropdown"  
           >  
-            Jump to Part  
+            Guide  
           </button>
 
           <div id="partsDropdown" class="parts-dropdown glass" hidden>  
             <div class="parts-dropdown-header">  
               <strong>All components</strong>  
-              <button id="closePartsDropdown" type="button" class="dropdown-close" aria-label="Close dropdown">×</button>  
+              <button id="closePartsDropdown" type="button" class="dropdown-close" aria-label="Close guide">×</button>  
             </div>
 
             <div class="parts-dropdown-tools">  
@@ -74,41 +75,45 @@
         <div id="hotspots"></div>
 
         <aside id="teachingPanel" class="floating-hotspot-card glass">  
-          <small id="partNumber"></small>  
-          <h2 id="partName"></h2>  
-          <div class="rule"></div>
+          <button id="closeTeachingPanel" class="panel-close" type="button" aria-label="Close component details">×</button>
 
-          <article>  
-            <i>◎</i>  
-            <div>  
-              <h3>Function</h3>  
-              <p id="functionText"></p>  
-            </div>  
-          </article>
+          <div class="panel-scroll">  
+            <small id="partNumber"></small>  
+            <h2 id="partName"></h2>  
+            <div class="rule"></div>
 
-          <article>  
-            <i>↗</i>  
-            <div>  
-              <h3>How to Use</h3>  
-              <p id="useText"></p>  
-            </div>  
-          </article>
+            <article>  
+              <i>◎</i>  
+              <div>  
+                <h3>Function</h3>  
+                <p id="functionText"></p>  
+              </div>  
+            </article>
 
-          <article class="pearl">  
-            <i>✦</i>  
-            <div>  
-              <h3>Clinical Pearl</h3>  
-              <p id="pearlText"></p>  
-            </div>  
-          </article>
+            <article>  
+              <i>↗</i>  
+              <div>  
+                <h3>How to Use</h3>  
+                <p id="useText"></p>  
+              </div>  
+            </article>
 
-          <article class="mistake">  
-            <i>!</i>  
-            <div>  
-              <h3>Common Beginner Mistake</h3>  
-              <p id="mistakeText"></p>  
-            </div>  
-          </article>  
+            <article class="pearl">  
+              <i>✦</i>  
+              <div>  
+                <h3>Clinical Pearl</h3>  
+                <p id="pearlText"></p>  
+              </div>  
+            </article>
+
+            <article class="mistake">  
+              <i>!</i>  
+              <div>  
+                <h3>Common Beginner Mistake</h3>  
+                <p id="mistakeText"></p>  
+              </div>  
+            </article>  
+          </div>  
         </aside>  
       </div>  
     </section>
@@ -123,8 +128,7 @@
       </button>
 
       <div class="bottom-center">  
-        <span id="lessonCount"></span>
-
+        <span id="lessonCount"></span>  
         <div id="dots" class="clickable-dots"></div>
 
         <div class="lesson-progress-inline">  
@@ -176,8 +180,8 @@
         <h3>Mechanics complete</h3>  
         <p>Next modules are now available.</p>  
         <div class="module-links">  
-          <a href="anterior.html" class="cute-btn primary-btn">Go to Anterior</a>  
-          <a href="posterior.html" class="cute-btn secondary-btn">Go to Posterior</a>  
+          <a href="anterior.html" class="utility-btn">Go to Anterior</a>  
+          <a href="posterior.html" class="utility-btn">Go to Posterior</a>  
         </div>  
       </div>  
     </section>  
